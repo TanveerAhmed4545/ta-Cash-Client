@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useAuth } from "../../../Provider/AuthProvider";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const SendMoney = () => {
+const CashOut = () => {
   const navigate = useNavigate();
   const [recipientEmail, setRecipientEmail] = useState("");
   const [amount, setAmount] = useState("");
@@ -14,7 +14,7 @@ const SendMoney = () => {
   const { user } = useAuth();
   const userEmail = user.email;
   const userName = user.name;
-  const type = "Send Money";
+  const type = "Cash Out";
   // Fetch users on component mount
   useEffect(() => {
     const fetchUsers = async () => {
@@ -22,7 +22,7 @@ const SendMoney = () => {
         const { data } = await axiosSecure.get("/UsersData");
         // Filter out  user's email
         const filteredUsers = data.filter(
-          (u) => u.role === "user" && u.email !== user?.email
+          (u) => u.role === "agent" && u.email !== user?.email
         );
         setUsers(filteredUsers.map((u) => u.email));
       } catch (error) {
@@ -34,28 +34,17 @@ const SendMoney = () => {
   }, [axiosSecure, user.email]);
 
   const handleSendMoney = async () => {
-    if (amount < 50) {
-      toast.error("Minimum transaction amount is 50 Taka.");
+    if (!amount || !pin) {
+      toast.error("Please enter amount and PIN.");
       return;
     }
 
     try {
-      //   const token = await getToken();
-      //   const config = {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   };
-
-      const { data } = await axiosSecure.post(
-        "/sendMoney",
-        {
-          recipientEmail,
-          amount,
-          pin,
-        }
-        // config
-      );
+      const { data } = await axiosSecure.post("/cashOut", {
+        recipientEmail,
+        amount,
+        pin,
+      });
 
       toast.success(data.message);
       //   console.log(data.result.modifiedCount);
@@ -82,10 +71,11 @@ const SendMoney = () => {
       toast.error(`Error: ${error.response.data.message}`);
     }
   };
+
   return (
     <div className="flex flex-col min-h-screen">
       <h2 className="text-lg md:text-3xl font-semibold text-center my-6">
-        Send Money
+        Cash Out
       </h2>
       <div className="my-5">
         <select
@@ -93,7 +83,7 @@ const SendMoney = () => {
           value={recipientEmail}
           onChange={(e) => setRecipientEmail(e.target.value)}
         >
-          <option value="">Select Recipient Email</option>
+          <option value="">Select Agent Email</option>
           {users.map((email) => (
             <option key={email} value={email}>
               {email}
@@ -118,11 +108,11 @@ const SendMoney = () => {
           className="btn bg-blue-500 text-white"
           onClick={handleSendMoney}
         >
-          Send Money
+          Cash Out
         </button>
       </div>
     </div>
   );
 };
 
-export default SendMoney;
+export default CashOut;

@@ -3,6 +3,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
 import UserManagement from "../Page/DashBoard/Admin/UserManagement";
 import DashHome from "../Page/DashBoard/DashHome/DashHome";
+import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
 import Home from "../Page/Home/Home";
@@ -50,8 +51,12 @@ export const router = createBrowserRouter([
         element: <SendMoney />,
       },
       {
-        path: "UserTransactions",
+        path: "userTransactions",
         element: <UserTransactions />,
+      },
+      {
+        path: "cashOut",
+        element: <CashOut />,
       },
     ],
   },

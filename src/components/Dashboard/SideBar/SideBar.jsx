@@ -56,13 +56,14 @@ const SideBar = () => {
           <div>
             <div className="w-full hidden md:flex px-4 py-2  justify-center items-center  mx-auto">
               <Link to="/">
-                <img
+                {/* <img
                   className="w-full rounded-lg shadow-lg"
                   src="https://i.ibb.co/S0pnvyQ/Shadoww.png"
                   alt="logo"
                   width="100"
                   height="100"
-                />
+                /> */}
+                <h2 className="text-2xl font-bold">Ta Cash</h2>
               </Link>
             </div>
           </div>
@@ -85,7 +86,7 @@ const SideBar = () => {
               {role === "guide" && <GuideMenu></GuideMenu>}
               {role === "admin" && <AdminMenu></AdminMenu>} */}
               {/* Admin Menu */}
-              <AdminMenu></AdminMenu>
+              <AdminMenu />
               <UserMenu />
 
               {/* Tourist Menu
