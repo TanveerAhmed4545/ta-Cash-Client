@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Provider/AuthProvider";
 import AdminMenu from "../Menu/AdminMenu/AdminMenu";
 import MenuItem from "../Menu/MenuItem/MenuItem";
+import UserMenu from "../Menu/UserMenu/UserMenu";
 
 const SideBar = () => {
   const { logout } = useAuth();
@@ -85,6 +86,7 @@ const SideBar = () => {
               {role === "admin" && <AdminMenu></AdminMenu>} */}
               {/* Admin Menu */}
               <AdminMenu></AdminMenu>
+              <UserMenu />
 
               {/* Tourist Menu
           <TouristMenu></TouristMenu> */}

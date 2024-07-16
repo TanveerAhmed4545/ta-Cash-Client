@@ -144,10 +144,14 @@ const AuthProvider = ({ children }) => {
     // console.log("Checking authentication, user:", user);
     return !!user;
   };
+  const getToken = () => {
+    const token = localStorage.getItem("token");
+    return token;
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, login, logout, isAuthenticated }}
+      value={{ user, loading, login, logout, isAuthenticated, getToken }}
     >
       {children}
     </AuthContext.Provider>
