@@ -6,6 +6,7 @@ import DashHome from "../Page/DashBoard/DashHome/DashHome";
 import Home from "../Page/Home/Home";
 import Login from "../Page/Login/Login";
 import Register from "../Page/Register/Register";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,11 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DashHome />,
+        element: (
+          <PrivateRoute>
+            <DashHome />
+          </PrivateRoute>
+        ),
       },
       {
         path: "user-Management",

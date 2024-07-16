@@ -1,15 +1,18 @@
 import Lottie from "lottie-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { FaEyeSlash } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import signInAnimation from "../../assets/cash.json";
 import { useAuth } from "../../Provider/AuthProvider";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,15 +33,23 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       await login(data.email, data.password);
+      toast.success("Login Successfully");
+      // navigate after login
+      navigate(
+        location.state?.from?.pathname
+          ? location.state?.from?.pathname
+          : "/dashboard"
+      );
     } catch (error) {
+      toast.error("Login error");
       console.error("Login error:", error.message);
       // Handle error, display error message to the user
     }
   };
 
-  //   const handleLogout = () => {
-  //     // Clear JWT token from localStorage (or sessionStorage)
-  //     localStorage.removeItem("token"); // Replace 'token' with your actual token key
+  // const handleLogout = () => {
+  //   // Clear JWT token from localStorage (or sessionStorage)
+  //   localStorage.removeItem("token"); // Replace 'token' with your actual token key
   // };
   return (
     <div className="hero min-h-screen ">

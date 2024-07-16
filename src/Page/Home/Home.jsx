@@ -6,7 +6,6 @@ const Home = () => {
   return (
     <div>
       <h2>Home</h2>
-      {/* Render user information or handle null state */}
       {user ? (
         <p>Welcome, {user.name}</p>
       ) : (

@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { GrLogout } from "react-icons/gr";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Provider/AuthProvider";
 import AdminMenu from "../Menu/AdminMenu/AdminMenu";
 import MenuItem from "../Menu/MenuItem/MenuItem";
 
 const SideBar = () => {
-  // const { logOut } = useAuth();
+  const { logout } = useAuth();
   const [isActive, setActive] = useState(false);
   // const [role] = useRole();
   // // console.log(role,isLoading);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -93,14 +95,14 @@ const SideBar = () => {
         <div>
           <hr />
 
-          {/* <button
-            onClick={() => logOut(navigate("/"))}
+          <button
+            onClick={() => logout(navigate("/login"))}
             className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform"
           >
             <GrLogout className="w-5 h-5" />
 
             <span className="mx-4 font-medium">Logout</span>
-          </button> */}
+          </button>
         </div>
       </div>
     </>

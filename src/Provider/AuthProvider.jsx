@@ -121,11 +121,11 @@ const AuthProvider = ({ children }) => {
       const { token, user } = response.data;
       localStorage.setItem("token", token);
 
-      console.log("Login response token:", token);
-      console.log("Login response user:", user);
+      // console.log("Login response token:", token);
+      // console.log("Login response user:", user);
 
       setUser(user); // Assuming the backend sends user data along with token
-      console.log("Set user state:", user);
+      // console.log("Set user state:", user);
     } catch (error) {
       console.error("Login error:", error.message);
       throw new Error("Login failed");
@@ -137,11 +137,11 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
-    console.log("Logged out, user set to null");
+    // console.log("Logged out, user set to null");
   };
 
   const isAuthenticated = () => {
-    console.log("Checking authentication, user:", user);
+    // console.log("Checking authentication, user:", user);
     return !!user;
   };
 
