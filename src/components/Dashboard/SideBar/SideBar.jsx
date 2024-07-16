@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Provider/AuthProvider";
 import AdminMenu from "../Menu/AdminMenu/AdminMenu";
 import MenuItem from "../Menu/MenuItem/MenuItem";
@@ -26,16 +26,16 @@ const SideBar = () => {
       <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
         <div>
           <div className="block cursor-pointer p-4 font-bold">
-            <Link to="/">
-              {/* <img
-                className="rounded-lg"
-                src="https://i.ibb.co/S0pnvyQ/Shadoww.png"
-                alt="logo"
-                width="100"
-                height="100"
-              /> */}
-              <h2 className="text-xl font-bold">Ta Cash</h2>
-            </Link>
+            {/* <Link to="/"> */}
+            <img
+              className="rounded-lg"
+              src="https://i.ibb.co/VSYpVyX/TaCash1.png"
+              alt="logo"
+              width="100"
+              height="100"
+            />
+            {/* <h2 className="text-xl font-bold">Ta Cash</h2> */}
+            {/* </Link> */}
           </div>
         </div>
 
@@ -56,16 +56,16 @@ const SideBar = () => {
         <div>
           <div>
             <div className="w-full hidden md:flex px-4 py-2  justify-center items-center  mx-auto">
-              <Link to="/">
-                {/* <img
-                  className="w-full rounded-lg shadow-lg"
-                  src="https://i.ibb.co/S0pnvyQ/Shadoww.png"
-                  alt="logo"
-                  width="100"
-                  height="100"
-                /> */}
-                <h2 className="text-2xl font-bold">Ta Cash</h2>
-              </Link>
+              {/* <Link to="/"> */}
+              <img
+                className="w-full rounded-lg shadow-lg"
+                src="https://i.ibb.co/VSYpVyX/TaCash1.png"
+                alt="logo"
+                width="100"
+                height="100"
+              />
+              {/* <h2 className="text-2xl font-bold">Ta Cash</h2> */}
+              {/* </Link> */}
             </div>
           </div>
 

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
+import AllTransactions from "../Page/DashBoard/Admin/AllTransactions";
 import UserManagement from "../Page/DashBoard/Admin/UserManagement";
 import DashHome from "../Page/DashBoard/DashHome/DashHome";
 import CashOut from "../Page/DashBoard/User/CashOut";
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
       {
         path: "user-Management",
         element: <UserManagement />,
+      },
+      {
+        path: "allTransactions",
+        element: <AllTransactions />,
       },
       {
         path: "send-Money",
