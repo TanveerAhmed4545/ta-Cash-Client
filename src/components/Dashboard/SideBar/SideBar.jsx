@@ -27,13 +27,14 @@ const SideBar = () => {
         <div>
           <div className="block cursor-pointer p-4 font-bold">
             <Link to="/">
-              <img
+              {/* <img
                 className="rounded-lg"
                 src="https://i.ibb.co/S0pnvyQ/Shadoww.png"
                 alt="logo"
                 width="100"
                 height="100"
-              />
+              /> */}
+              <h2 className="text-xl font-bold">Ta Cash</h2>
             </Link>
           </div>
         </div>
@@ -82,10 +83,10 @@ const SideBar = () => {
                 icon={FaHome}
               ></MenuItem>
 
-              {/* {role === "tourist" && <TouristMenu></TouristMenu>}
-              {role === "guide" && <GuideMenu></GuideMenu>}
+              {/* {role === "user" && <UserMenu></UserMenu>}
+              {role === "agent" && <AgentMenu></AgentMenu>}
               {role === "admin" && <AdminMenu></AdminMenu>} */}
-              {/* Admin Menu */}
+
               <AdminMenu />
               <UserMenu />
 
