@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import { useAuth } from "../../../Provider/AuthProvider";
 
 const SendMoney = () => {
+  const navigate = useNavigate();
   const [recipientEmail, setRecipientEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [pin, setPin] = useState("");
   const [users, setUsers] = useState([]);
   const axiosPublic = useAxiosPublic();
   const { user, getToken } = useAuth();
-
+  const userEmail = user.email;
+  const userName = user.name;
+  const type = "Send Money";
   // Fetch users on component mount
   useEffect(() => {
     const fetchUsers = async () => {
@@ -18,7 +22,7 @@ const SendMoney = () => {
         const { data } = await axiosPublic.get("/UsersData");
         // Filter out  user's email
         const filteredUsers = data.filter(
-          (u) => u.role === "user" && u.email !== user.email
+          (u) => u.role === "user" && u.email !== user?.email
         );
         setUsers(filteredUsers.map((u) => u.email));
       } catch (error) {
@@ -55,6 +59,20 @@ const SendMoney = () => {
 
       toast.success(data.message);
       console.log(data.result.modifiedCount);
+      if (data.result.modifiedCount > 0) {
+        const history = {
+          recipientEmail,
+          amount,
+          userEmail,
+          userName,
+          type,
+        };
+        console.table(history);
+        const res = await axiosPublic.post("/historyData", history, config);
+        if (res.data?.historyResult?.insertedId) {
+          navigate("/dashboard/userTransactions");
+        }
+      }
 
       // Reset form fields after successful transaction
       setRecipientEmail("");
