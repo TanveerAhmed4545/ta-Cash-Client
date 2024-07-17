@@ -1,4 +1,5 @@
 import { BsCashCoin } from "react-icons/bs";
+import { GiCash } from "react-icons/gi";
 import { GrTransaction } from "react-icons/gr";
 import { MdOutlineSendToMobile } from "react-icons/md";
 import MenuItem from "../MenuItem/MenuItem";
@@ -16,6 +17,7 @@ const UserMenu = () => {
         address={"cashOut"}
         icon={BsCashCoin}
       ></MenuItem>
+      <MenuItem label={"Cash In"} address={"cashIn"} icon={GiCash}></MenuItem>
       <MenuItem
         label={"User Transactions"}
         address={"userTransactions"}

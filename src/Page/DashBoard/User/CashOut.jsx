@@ -14,21 +14,18 @@ const CashOut = () => {
   const [users, setUsers] = useState([]);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const userEmail = user.email;
-  const userName = user.name;
-  const type = "Cash Out";
+  const userEmail = user?.email;
+  const userName = user?.name;
+
   // Fetch users on component mount
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const { data } = await axiosSecure.get("/UsersData");
         // Filter out  user's email
-        // const filteredUsers = data.filter(
-        //   (u) => u.role === "agent" && u.email !== user?.email
-        // );
         const filteredUsers = data.filter(
           (u) =>
-            u.role === "user" &&
+            u.role === "agent" &&
             u.status === "approved" &&
             u.email !== user?.email
         );
@@ -57,12 +54,15 @@ const CashOut = () => {
       toast.success(data.message);
       //   console.log(data.result.modifiedCount);
       if (data.result.modifiedCount > 0) {
+        const totalAmount = data?.totalAmountToDeduct;
+        const type = "Cash Out";
         const history = {
           recipientEmail,
           amount,
           userEmail,
           userName,
           type,
+          totalAmount,
         };
         // console.table(history);
         const res = await axiosSecure.post("/historyData", history);

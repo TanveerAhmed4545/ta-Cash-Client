@@ -65,12 +65,15 @@ const SendMoney = () => {
       toast.success(data.message);
       // console.log(data);
       if (data.result.modifiedCount > 0) {
+        // console.log(data?.totalAmount);
+        const totalAmount = data?.totalAmount;
         const history = {
           recipientEmail,
           amount,
           userEmail,
           userName,
           type,
+          totalAmount,
         };
         // console.table(history);
         const res = await axiosSecure.post("/historyData", history);

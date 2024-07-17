@@ -3,7 +3,10 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import Main from "../Layout/Main";
 import AllTransactions from "../Page/DashBoard/Admin/AllTransactions";
 import UserManagement from "../Page/DashBoard/Admin/UserManagement";
+import AgentTransactions from "../Page/DashBoard/Agent/AgentTransactions";
+import TransactionManagement from "../Page/DashBoard/Agent/TransactionManagement";
 import DashHome from "../Page/DashBoard/DashHome/DashHome";
+import CashIn from "../Page/DashBoard/User/CashIn";
 import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
@@ -60,8 +63,20 @@ export const router = createBrowserRouter([
         element: <UserTransactions />,
       },
       {
+        path: "agentTransactions",
+        element: <AgentTransactions />,
+      },
+      {
         path: "cashOut",
         element: <CashOut />,
+      },
+      {
+        path: "cashIn",
+        element: <CashIn />,
+      },
+      {
+        path: "transferManagement",
+        element: <TransactionManagement />,
       },
     ],
   },

@@ -5,6 +5,7 @@ import { GrLogout } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Provider/AuthProvider";
 import AdminMenu from "../Menu/AdminMenu/AdminMenu";
+import AgentMenu from "../Menu/AgentMenu/AgentMenu";
 import MenuItem from "../Menu/MenuItem/MenuItem";
 import UserMenu from "../Menu/UserMenu/UserMenu";
 
@@ -89,6 +90,7 @@ const SideBar = () => {
 
               <AdminMenu />
               <UserMenu />
+              <AgentMenu />
 
               {/* Tourist Menu
           <TouristMenu></TouristMenu> */}
