@@ -55,7 +55,9 @@ const Login = () => {
     <div className="hero min-h-screen ">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left ml-0 lg:ml-10">
-          <h1 className="text-4xl font-bold mb-4">Login Now</h1>
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">
+            Login Now To Ta-Cash
+          </h1>
           {/* <div>
             <button className="btn" onClick={handleLogout}>
               Logout

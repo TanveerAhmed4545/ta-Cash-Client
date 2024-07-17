@@ -36,7 +36,9 @@ const Register = () => {
     <div className="hero min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left lg:ml-10">
-          <h1 className="text-5xl font-bold">Register Now</h1>
+          <h1 className=" text-2xl md:text-4xl font-bold">
+            Register Now To Ta-Cash
+          </h1>
           <div className="max-w-[600px] md:max-w-md lg:max-w-[600px]">
             <Lottie
               className="w-full"
