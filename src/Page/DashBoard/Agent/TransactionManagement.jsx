@@ -100,7 +100,7 @@ const TransactionManagement = () => {
               transactions.map((transaction, idx) => (
                 <tr key={transaction._id} className="hover">
                   <th>{idx + 1}</th>
-                  <td>{transaction.userId}</td>
+                  <td>{transaction.userEmail}</td>
                   <td>{transaction.agentEmail}</td>
                   <td>{transaction.amount}</td>
                   <td>{transaction.type}</td>
@@ -109,7 +109,7 @@ const TransactionManagement = () => {
                     <>
                       <td>
                         <button
-                          className="btn bg-green-500 text-white"
+                          className="btn btn-sm bg-green-500 text-white"
                           onClick={() =>
                             manageTransaction(transaction._id, "approve")
                           }
@@ -119,7 +119,7 @@ const TransactionManagement = () => {
                       </td>
                       <td>
                         <button
-                          className="btn bg-red-500 text-white"
+                          className="btn btn-sm bg-red-500 text-white"
                           onClick={() =>
                             manageTransaction(transaction._id, "reject")
                           }

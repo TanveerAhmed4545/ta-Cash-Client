@@ -10,9 +10,10 @@ import CashIn from "../Page/DashBoard/User/CashIn";
 import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
-import Home from "../Page/Home/Home";
 import Login from "../Page/Login/Login";
 import Register from "../Page/Register/Register";
+import AdminRoute from "./AdminRoute";
+import AgentRoute from "./AgentRoute";
 import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
@@ -22,12 +23,9 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/login",
         element: <Login />,
       },
+
       {
         path: "/register",
         element: <Register />,
@@ -48,35 +46,75 @@ export const router = createBrowserRouter([
       },
       {
         path: "user-Management",
-        element: <UserManagement />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <UserManagement />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "allTransactions",
-        element: <AllTransactions />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllTransactions />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "send-Money",
-        element: <SendMoney />,
+        element: (
+          <PrivateRoute>
+            <SendMoney />
+          </PrivateRoute>
+        ),
       },
       {
         path: "userTransactions",
-        element: <UserTransactions />,
+        element: (
+          <PrivateRoute>
+            <UserTransactions />
+          </PrivateRoute>
+        ),
       },
       {
         path: "agentTransactions",
-        element: <AgentTransactions />,
+        element: (
+          <PrivateRoute>
+            <AgentRoute>
+              <AgentTransactions />
+            </AgentRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "cashOut",
-        element: <CashOut />,
+        element: (
+          <PrivateRoute>
+            <CashOut />
+          </PrivateRoute>
+        ),
       },
       {
         path: "cashIn",
-        element: <CashIn />,
+        element: (
+          <PrivateRoute>
+            <CashIn />
+          </PrivateRoute>
+        ),
       },
       {
         path: "transferManagement",
-        element: <TransactionManagement />,
+        element: (
+          <PrivateRoute>
+            <AgentRoute>
+              <TransactionManagement />
+            </AgentRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -3,6 +3,7 @@ import { AiOutlineBars } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { GrLogout } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
+import useRole from "../../../hooks/useRole";
 import { useAuth } from "../../../Provider/AuthProvider";
 import AdminMenu from "../Menu/AdminMenu/AdminMenu";
 import AgentMenu from "../Menu/AgentMenu/AgentMenu";
@@ -12,7 +13,7 @@ import UserMenu from "../Menu/UserMenu/UserMenu";
 const SideBar = () => {
   const { logout } = useAuth();
   const [isActive, setActive] = useState(false);
-  // const [role] = useRole();
+  const [role] = useRole();
   // // console.log(role,isLoading);
 
   const navigate = useNavigate();
@@ -84,16 +85,13 @@ const SideBar = () => {
                 icon={FaHome}
               ></MenuItem>
 
-              {/* {role === "user" && <UserMenu></UserMenu>}
+              {role === "user" && <UserMenu></UserMenu>}
               {role === "agent" && <AgentMenu></AgentMenu>}
-              {role === "admin" && <AdminMenu></AdminMenu>} */}
+              {role === "admin" && <AdminMenu></AdminMenu>}
 
-              <AdminMenu />
+              {/* <AdminMenu />
               <UserMenu />
-              <AgentMenu />
-
-              {/* Tourist Menu
-          <TouristMenu></TouristMenu> */}
+              <AgentMenu /> */}
             </nav>
           </div>
         </div>
@@ -102,7 +100,7 @@ const SideBar = () => {
           <hr />
 
           <button
-            onClick={() => logout(navigate("/login"))}
+            onClick={() => logout(navigate("/"))}
             className="flex w-full items-center px-4 py-2 mt-5 text-gray-600 hover:bg-gray-300   hover:text-gray-700 transition-colors duration-300 transform"
           >
             <GrLogout className="w-5 h-5" />

@@ -70,13 +70,13 @@ const UserManagement = () => {
             {users.map((item, idx) => (
               <tr key={idx} className="hover">
                 <th>{idx + 1}</th>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.role}</td>
-                <td>{item.status}</td>
+                <td className="font-medium">{item.name}</td>
+                <td className="font-medium">{item.email}</td>
+                <td className="font-medium">{item.role}</td>
+                <td className="font-medium">{item.status}</td>
                 <td>
                   <button
-                    className="btn bg-teal-400 text-white"
+                    className="btn btn-sm bg-teal-400 text-white"
                     onClick={() =>
                       handleRoleChange(item.email, "user", "approved")
                     }
@@ -87,7 +87,7 @@ const UserManagement = () => {
                 </td>
                 <td>
                   <button
-                    className="btn bg-emerald-400 text-white"
+                    className="btn btn-sm bg-emerald-400 text-white"
                     onClick={() =>
                       handleRoleChange(item.email, "agent", "approved")
                     }
@@ -99,7 +99,7 @@ const UserManagement = () => {
                 </td>
                 <td>
                   <button
-                    className="btn bg-red-400 text-white"
+                    className="btn btn-sm bg-red-400 text-white"
                     onClick={() =>
                       handleRoleChange(item.email, item.role, "Blocked")
                     }

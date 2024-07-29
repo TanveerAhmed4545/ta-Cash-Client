@@ -25,7 +25,7 @@ const Register = () => {
       response.data &&
         toast.success("Registration Successfully and Please Login");
       reset();
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       toast.error("Registration failed");
       console.error("Registration failed:", error);
@@ -154,7 +154,7 @@ const Register = () => {
           <div className="text-center py-5">
             <p>
               Already have an account?{" "}
-              <Link className="text-[#2563EB] font-bold" to="/login">
+              <Link className="text-[#2563EB] font-bold" to="/">
                 Login
               </Link>
             </p>
