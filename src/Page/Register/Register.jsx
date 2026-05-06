@@ -20,7 +20,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5000/register", data);
+      const response = await axios.post("https://ta-cash-server.vercel.app/register", data);
       response.data && toast.success("Registration Successfully and Please Login");
       reset();
       navigate("/");
