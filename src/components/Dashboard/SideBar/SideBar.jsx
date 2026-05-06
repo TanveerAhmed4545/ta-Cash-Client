@@ -1,5 +1,6 @@
 import { GrLogout } from "react-icons/gr";
 import { FaHome } from "react-icons/fa";
+import { FiUser } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import useRole from "../../../hooks/useRole";
 import { useAuth } from "../../../Provider/AuthProvider";
@@ -53,6 +54,12 @@ const SideBar = ({ isActive, setActive }) => {
                 label={"Dashboard"}
                 address={"/dashboard"}
                 icon={FaHome}
+              ></MenuItem>
+
+              <MenuItem
+                label={"Profile"}
+                address={"/dashboard/profile"}
+                icon={FiUser}
               ></MenuItem>
 
               {role === "user" && <UserMenu></UserMenu>}
