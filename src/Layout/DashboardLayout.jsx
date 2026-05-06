@@ -5,9 +5,12 @@ import { FaSearch, FaBell, FaCommentAlt } from "react-icons/fa";
 import { AiOutlineBars } from "react-icons/ai";
 import { FiUser, FiMail, FiKey, FiLogOut } from "react-icons/fi";
 import { useAuth } from "../Provider/AuthProvider";
+import NotificationDropdown from "../components/Dashboard/Notification/NotificationDropdown";
+import useNotifications from "../hooks/useNotifications";
 
 const DashboardLayout = () => {
   const { user, logout } = useAuth();
+  const { notifications, markAllRead, refetch } = useNotifications();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -100,10 +103,11 @@ const DashboardLayout = () => {
                <button className="relative p-2 bg-white rounded-full text-gray-500 hover:text-[#1A3626] transition-colors shadow-sm border border-gray-100">
                  <FaCommentAlt className="text-sm md:text-base" />
                </button>
-               <button className="relative p-2 bg-white rounded-full text-gray-500 hover:text-[#1A3626] transition-colors shadow-sm border border-gray-100">
-                 <FaBell className="text-sm md:text-base" />
-                 <span className="absolute top-0 right-0 bg-red-500 w-2 h-2 rounded-full border border-white"></span>
-               </button>
+               <NotificationDropdown 
+                 notifications={notifications} 
+                 onMarkAllRead={markAllRead} 
+                 onRefetch={refetch}
+               />
             </div>
 
             {/* Profile Dropdown */}
