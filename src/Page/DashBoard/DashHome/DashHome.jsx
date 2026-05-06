@@ -299,15 +299,16 @@ const DashHome = () => {
           </div>
 
           {/* Recent Transactions */}
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex-1">
+          <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex-1 min-w-0">
              <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-bold text-gray-800">Recent Transaction</h3>
                 <div className="flex items-center gap-2">
-                   <select className="text-xs border border-gray-200 rounded-lg px-2 py-1 bg-transparent outline-none">
+                   <select className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 bg-white outline-none shadow-sm text-gray-600 font-medium">
                      <option>This Month</option>
+                     <option>Last Month</option>
                    </select>
-                   <button className="p-1 border border-gray-200 rounded-lg text-gray-400">
-                     <FaExchangeAlt className="text-xs" />
+                   <button className="p-1.5 border border-gray-200 rounded-lg text-gray-400 shadow-sm hover:bg-gray-50 transition-colors">
+                     <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" /></svg>
                    </button>
                 </div>
              </div>
@@ -316,37 +317,43 @@ const DashHome = () => {
                <table className="w-full text-left border-collapse">
                  <thead>
                    <tr className="border-b border-gray-100">
-                     <th className="pb-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Transaction Name</th>
-                     <th className="pb-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Date & Time</th>
-                     <th className="pb-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Amount</th>
-                     <th className="pb-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
+                     <th className="pb-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Transaction Name</th>
+                     <th className="pb-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date & Time</th>
+                     <th className="pb-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Amount</th>
+                     <th className="pb-3 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Status</th>
                    </tr>
                  </thead>
                  <tbody>
-                   {recentTransactions.map((tx, idx) => (
-                     <tr key={idx} className="border-b border-gray-50 last:border-0">
+                   {history.length > 0 ? history.slice(0, 5).map((tx, idx) => (
+                     <tr key={idx} className="border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors">
                        <td className="py-4">
-                         <p className="text-sm font-bold text-gray-800">{tx.type || tx.userName || "Payment"}</p>
-                         <p className="text-xs text-gray-400 mt-1">{tx.recipientEmail || "Service"}</p>
+                         <p className="text-sm font-bold text-gray-800 lowercase">{tx.type || tx.category || "send-money"}</p>
+                         <p className="text-[11px] text-gray-400 mt-0.5 truncate max-w-[150px]">{tx.recipientEmail || tx.userEmail}</p>
                        </td>
                        <td className="py-4">
-                         <p className="text-sm text-gray-600">{tx.date || "2024-03-01"}</p>
-                         <p className="text-xs text-gray-400 mt-1">04:28:48</p>
+                         <p className="text-sm text-gray-600 font-medium">
+                            {tx.time ? new Date(tx.time).toISOString().split('T')[0] : "2024-03-01"}
+                         </p>
+                         <p className="text-[11px] text-gray-400 mt-0.5">
+                            {tx.time ? new Date(tx.time).toLocaleTimeString([], { hour12: false }) : "04:28:48"}
+                         </p>
                        </td>
                        <td className="py-4">
-                         <p className="text-sm font-bold text-gray-800">${Number(tx.amount).toFixed(2)}</p>
+                         <p className="text-sm font-bold text-gray-900">${Number(tx.amount || 0).toFixed(2)}</p>
                        </td>
                        <td className="py-4">
-                         {tx.status === 'Failed' || idx === 0 ? (
-                            <span className="px-3 py-1 bg-red-50 text-red-500 rounded-full text-xs font-bold">Failed</span>
-                         ) : tx.status === 'Completed' || idx === 1 ? (
-                            <span className="px-3 py-1 bg-green-50 text-green-500 rounded-full text-xs font-bold">Completed</span>
-                         ) : (
-                            <span className="px-3 py-1 bg-yellow-50 text-yellow-500 rounded-full text-xs font-bold">Pending</span>
-                         )}
+                         <span className={`px-3 py-1 rounded-full text-[11px] font-bold ${
+                           tx.status === 'reject' ? 'bg-red-50 text-red-500' :
+                           tx.status === 'pending' ? 'bg-yellow-50 text-yellow-600' :
+                           'bg-[#ecfdf5] text-[#10b981]'
+                         }`}>
+                           {tx.status === 'reject' ? 'Failed' : tx.status === 'approve' || !tx.status ? 'Completed' : 'Pending'}
+                         </span>
                        </td>
                      </tr>
-                   ))}
+                   )) : (
+                     <tr><td colSpan="4" className="py-10 text-center text-gray-400 text-sm italic">No recent transactions found</td></tr>
+                   )}
                  </tbody>
                </table>
              </div>
