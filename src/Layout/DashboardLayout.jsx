@@ -18,6 +18,7 @@ const DashboardLayout = () => {
     { name: "Dashboard", path: "/dashboard" },
     { name: "Cash In (Add Money)", path: "/dashboard/cashIn" },
     { name: "Cash Out (Withdraw)", path: "/dashboard/cashOut" },
+    { name: "Profile", path: "/dashboard/profile" },
     { name: "Send Money (Transfer)", path: "/dashboard/send-Money" },
     { name: "Transaction History", path: "/dashboard/userTransactions" },
     // Admin specific
@@ -127,7 +128,13 @@ const DashboardLayout = () => {
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)}></div>
                   <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-                    <button className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+                    <button 
+                      onClick={() => {
+                        navigate("/dashboard/profile");
+                        setProfileOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+                    >
                       <FiUser className="w-4 h-4 mr-3 text-[#3b82f6]" />
                       Profile
                     </button>

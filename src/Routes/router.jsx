@@ -10,6 +10,7 @@ import CashIn from "../Page/DashBoard/User/CashIn";
 import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
+import Profile from "../Page/DashBoard/Profile/Profile";
 import Login from "../Page/Login/Login";
 import Register from "../Page/Register/Register";
 import AdminRoute from "./AdminRoute";
@@ -113,6 +114,14 @@ export const router = createBrowserRouter([
             <AgentRoute>
               <TransactionManagement />
             </AgentRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         ),
       },
