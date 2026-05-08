@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useBalance from "../../../hooks/useBalance";
 import { useAuth } from "../../../Provider/AuthProvider";
@@ -22,6 +22,11 @@ const DashHome = () => {
   const { user } = useAuth();
   const [balance, isLoading] = useBalance();
   const axiosSecure = useAxiosSecure();
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const { data: history = [] } = useQuery({
     queryKey: ["history", user?.email],
@@ -284,17 +289,19 @@ const DashHome = () => {
                 </div>
              </div>
              
-             <div className="h-64 w-full mt-4">
-               <ResponsiveContainer width="100%" height="100%">
-                 <BarChart data={cashflowData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
-                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 11}} dy={10} />
-                   <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 11}} />
-                   <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'}} />
-                   <Bar dataKey="income" stackId="a" fill="#1A3626" radius={[4, 4, 0, 0]} barSize={16} />
-                   <Bar dataKey="expense" stackId="a" fill="#bbf7d0" radius={[0, 0, 4, 4]} barSize={16} />
-                 </BarChart>
-               </ResponsiveContainer>
+             <div className="h-64 w-full mt-4 min-h-[250px]">
+               {hasMounted && (
+                 <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={1}>
+                   <BarChart data={cashflowData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
+                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f3f4f6" />
+                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 11}} dy={10} />
+                     <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 11}} />
+                     <Tooltip cursor={{fill: '#f8fafc'}} contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'}} />
+                     <Bar dataKey="income" stackId="a" fill="#1A3626" radius={[4, 4, 0, 0]} barSize={16} />
+                     <Bar dataKey="expense" stackId="a" fill="#bbf7d0" radius={[0, 0, 4, 4]} barSize={16} />
+                   </BarChart>
+                 </ResponsiveContainer>
+               )}
              </div>
           </div>
 
@@ -376,23 +383,25 @@ const DashHome = () => {
                 <span className="text-[#1A3626] border-b border-[#bbf7d0] pb-1">Expense <span className="text-gray-800">(${outcome.toLocaleString()})</span></span>
              </div>
 
-             <div className="h-48 w-full relative my-4">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={pieData}
-                      innerRadius="75%"
-                      outerRadius="100%"
-                      paddingAngle={5}
-                      dataKey="value"
-                      stroke="none"
-                    >
-                      {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
+             <div className="h-48 w-full relative my-4 min-h-[200px]">
+                {hasMounted && (
+                  <ResponsiveContainer width="100%" height="100%" minWidth={0} debounce={1}>
+                    <PieChart>
+                      <Pie
+                        data={pieData}
+                        innerRadius="75%"
+                        outerRadius="100%"
+                        paddingAngle={5}
+                        dataKey="value"
+                        stroke="none"
+                      >
+                        {pieData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                    </PieChart>
+                  </ResponsiveContainer>
+                )}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                    <p className="text-xs text-gray-400">Total Expense</p>
                    <p className="text-2xl font-bold text-[#1A3626]">${outcome.toLocaleString()}</p>

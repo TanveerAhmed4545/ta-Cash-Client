@@ -7,9 +7,11 @@ import { FaEyeSlash } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import signUpAnimation from "../../assets/cash2.json";
+import { uploadImage } from "../../utils/uploadImage";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -19,14 +21,30 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setUploading(true);
     try {
-      const response = await axios.post("https://ta-cash-server.vercel.app/register", data);
+      let photoURL = "";
+      if (data.photo && data.photo[0]) {
+        photoURL = await uploadImage(data.photo[0]);
+      }
+
+      const userData = {
+        ...data,
+        photoURL: photoURL || `https://ui-avatars.com/api/?name=${data.name}&background=1A3626&color=fff`,
+      };
+      
+      // Remove the file object from the data sent to server
+      delete userData.photo;
+
+      const response = await axios.post("https://ta-cash-server.vercel.app/register", userData);
       response.data && toast.success("Registration Successfully and Please Login");
       reset();
       navigate("/");
     } catch (error) {
       toast.error("Registration failed");
       console.error("Registration failed:", error);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -105,6 +123,16 @@ const Register = () => {
             </div>
 
             <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Picture</label>
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full px-5 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#1A3626] file:text-white hover:file:bg-[#14281c]"
+                {...register("photo")}
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
               <input
                 type="email"
@@ -143,9 +171,10 @@ const Register = () => {
 
             <button
               type="submit"
-              className="w-full py-4 mt-6 bg-[#1A3626] text-white font-bold rounded-xl hover:bg-[#14281c] hover:shadow-lg hover:-translate-y-0.5 transition-all active:translate-y-0"
+              disabled={uploading}
+              className="w-full py-4 mt-6 bg-[#1A3626] text-white font-bold rounded-xl hover:bg-[#14281c] hover:shadow-lg hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70"
             >
-              Sign Up
+              {uploading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
 

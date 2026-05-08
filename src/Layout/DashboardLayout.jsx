@@ -7,12 +7,17 @@ import { FiUser, FiMail, FiKey, FiLogOut } from "react-icons/fi";
 import { useAuth } from "../Provider/AuthProvider";
 import NotificationDropdown from "../components/Dashboard/Notification/NotificationDropdown";
 import useNotifications from "../hooks/useNotifications";
+import ChangePinModal from "../components/Dashboard/Modals/ChangePinModal";
+import InboxModal from "../components/Dashboard/Modals/InboxModal";
+import toast from "react-hot-toast";
 
 const DashboardLayout = () => {
   const { user, logout } = useAuth();
   const { notifications, markAllRead, refetch } = useNotifications();
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
+  const [isChangePinOpen, setChangePinOpen] = useState(false);
+  const [isInboxOpen, setInboxOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
@@ -100,7 +105,10 @@ const DashboardLayout = () => {
 
             {/* Notification icons */}
             <div className="flex items-center gap-2 md:gap-3">
-               <button className="relative p-2 bg-white rounded-full text-gray-500 hover:text-[#1A3626] transition-colors shadow-sm border border-gray-100">
+               <button 
+                onClick={() => setInboxOpen(true)}
+                className="relative p-2 bg-white rounded-full text-gray-500 hover:text-[#1A3626] transition-colors shadow-sm border border-gray-100"
+               >
                  <FaCommentAlt className="text-sm md:text-base" />
                </button>
                <NotificationDropdown 
@@ -123,6 +131,9 @@ const DashboardLayout = () => {
                 <img
                   src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'Andrew Forbist'}&background=1A3626&color=fff`}
                   alt="Profile"
+                  onError={(e) => {
+                    e.target.src = `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff`;
+                  }}
                   className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-green-200 shadow-sm object-cover shrink-0"
                 />
               </div>
@@ -140,11 +151,23 @@ const DashboardLayout = () => {
                       <FiUser className="w-4 h-4 mr-3 text-[#3b82f6]" />
                       Profile
                     </Link>
-                    <button className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+                    <button 
+                      onClick={() => {
+                        setInboxOpen(true);
+                        setProfileOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+                    >
                       <FiMail className="w-4 h-4 mr-3 text-[#22c55e]" />
                       Inbox
                     </button>
-                    <button className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+                    <button 
+                      onClick={() => {
+                        setChangePinOpen(true);
+                        setProfileOpen(false);
+                      }}
+                      className="w-full flex items-center px-4 py-3 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+                    >
                       <FiKey className="w-4 h-4 mr-3 text-gray-700" />
                       Change Password
                     </button>
@@ -172,6 +195,15 @@ const DashboardLayout = () => {
           <Outlet></Outlet>
         </div>
       </div>
+
+      <ChangePinModal 
+        isOpen={isChangePinOpen} 
+        onClose={() => setChangePinOpen(false)} 
+      />
+      <InboxModal 
+        isOpen={isInboxOpen} 
+        onClose={() => setInboxOpen(false)} 
+      />
     </div>
   );
 };

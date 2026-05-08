@@ -17,7 +17,7 @@
 //       const token = localStorage.getItem("token");
 //       if (token) {
 //         try {
-//           const userResponse = await axios.get("http://localhost:5000/Users", {
+//           const userResponse = await axios.get("https://ta-cash-server.vercel.app/Users", {
 //             headers: {
 //               Authorization: `Bearer ${token}`,
 //             },
@@ -40,7 +40,7 @@
 //   const login = async (email, password) => {
 //     setLoading(true); // Set loading to true when login starts
 //     try {
-//       const response = await axios.post("http://localhost:5000/login", {
+//       const response = await axios.post("https://ta-cash-server.vercel.app/login", {
 //         email,
 //         password,
 //       });
@@ -175,6 +175,7 @@ const AuthProvider = ({ children }) => {
         loading,
         login,
         logout,
+        setUser,
         isAuthenticated,
         getToken,
       }}

@@ -1,10 +1,51 @@
+import { useState } from "react";
 import { useAuth } from "../../../Provider/AuthProvider";
 import useBalance from "../../../hooks/useBalance";
-import { FiUser, FiMail, FiPhone, FiShield, FiCreditCard } from "react-icons/fi";
+import { FiUser, FiMail, FiPhone, FiShield, FiCreditCard, FiCamera } from "react-icons/fi";
+import ChangePinModal from "../../../components/Dashboard/Modals/ChangePinModal";
+import EditProfileModal from "../../../components/Dashboard/Modals/EditProfileModal";
+import { formatDistanceToNow } from "date-fns";
+import { uploadImage } from "../../../utils/uploadImage";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [balance] = useBalance();
+  const [isChangePinOpen, setChangePinOpen] = useState(false);
+  const [isEditProfileOpen, setEditProfileOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const axiosSecure = useAxiosSecure();
+
+  const pinChangeText = user?.lastPinChange 
+    ? `Last changed ${formatDistanceToNow(new Date(user.lastPinChange))} ago`
+    : "PIN has not been changed recently";
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const toastId = toast.loading("Uploading image...");
+    try {
+      const photoURL = await uploadImage(file);
+      if (photoURL) {
+        const response = await axiosSecure.patch("/update-profile", { photoURL });
+        if (response.status === 200) {
+          const updatedUser = response.data.user;
+          setUser(updatedUser);
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+          toast.success("Profile picture updated!", { id: toastId });
+        }
+      } else {
+        toast.error("Failed to upload image", { id: toastId });
+      }
+    } catch (error) {
+      toast.error("Error updating profile picture", { id: toastId });
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -17,12 +58,28 @@ const Profile = () => {
         {/* Left Column - User Info Card */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center">
-            <div className="relative mb-6">
-              <img
-                src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff&size=128`}
-                alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-green-50 shadow-md object-cover"
-              />
+            <div className="relative mb-6 group">
+              <div className="relative w-32 h-32">
+                <img
+                  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff&size=128`}
+                  alt="Profile"
+                  onError={(e) => {
+                    e.target.src = `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff&size=128`;
+                  }}
+                  className={`w-full h-full rounded-full border-4 border-green-50 shadow-md object-cover transition-all ${uploading ? 'opacity-50 grayscale' : 'group-hover:brightness-75'}`}
+                />
+                {uploading && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-8 h-8 border-4 border-[#1A3626] border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                )}
+                <label className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity">
+                   <div className="p-2 bg-black/40 rounded-full text-white">
+                      <FiCamera size={20} />
+                   </div>
+                   <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} disabled={uploading} />
+                </label>
+              </div>
               <div className="absolute bottom-1 right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-white"></div>
             </div>
             <h3 className="text-xl font-bold text-gray-900">{user?.name || "Ta-Cash User"}</h3>
@@ -64,7 +121,12 @@ const Profile = () => {
                     <p className="text-sm font-bold text-gray-800">{user?.name}</p>
                   </div>
                 </div>
-                <button className="text-xs font-bold text-blue-600 hover:underline">Edit</button>
+                <button 
+                  onClick={() => setEditProfileOpen(true)}
+                  className="text-xs font-bold text-blue-600 hover:underline"
+                >
+                  Edit
+                </button>
               </div>
 
               <div className="flex items-center justify-between py-3 border-b border-gray-50">
@@ -90,7 +152,12 @@ const Profile = () => {
                     <p className="text-sm font-bold text-gray-800">{user?.phone || "+880 1XXX-XXXXXX"}</p>
                   </div>
                 </div>
-                <button className="text-xs font-bold text-blue-600 hover:underline">Update</button>
+                <button 
+                  onClick={() => setEditProfileOpen(true)}
+                  className="text-xs font-bold text-blue-600 hover:underline"
+                >
+                  Update
+                </button>
               </div>
             </div>
           </div>
@@ -104,11 +171,14 @@ const Profile = () => {
               <div className="p-4 bg-gray-50 rounded-2xl flex items-center justify-between hover:bg-gray-100 transition-colors cursor-pointer group">
                  <div>
                     <p className="text-sm font-bold text-gray-800">Account PIN</p>
-                    <p className="text-xs text-gray-500 mt-0.5">Last changed 3 months ago</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{pinChangeText}</p>
                  </div>
-                 <button className="px-4 py-2 bg-white text-gray-700 text-xs font-bold rounded-lg border border-gray-200 group-hover:border-[#1A3626] transition-colors">
-                   Change PIN
-                 </button>
+                 <button 
+                    onClick={() => setChangePinOpen(true)}
+                    className="px-4 py-2 bg-white text-gray-700 text-xs font-bold rounded-lg border border-gray-200 group-hover:border-[#1A3626] transition-colors"
+                  >
+                    Change PIN
+                  </button>
               </div>
 
               <div className="p-4 bg-gray-50 rounded-2xl flex items-center justify-between hover:bg-gray-100 transition-colors cursor-pointer group">
@@ -124,6 +194,15 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <ChangePinModal 
+        isOpen={isChangePinOpen} 
+        onClose={() => setChangePinOpen(false)} 
+      />
+      <EditProfileModal 
+        isOpen={isEditProfileOpen} 
+        onClose={() => setEditProfileOpen(false)} 
+      />
     </div>
   );
 };
