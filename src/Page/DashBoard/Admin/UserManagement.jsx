@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaSearch, FaUserCheck, FaUserTie, FaUserSlash, FaTrash } from "react-icons/fa";
 
@@ -35,14 +36,20 @@ const UserManagement = () => {
     },
   });
 
-  const deleteUser = useMutation({
+  const deleteUserMutation = useMutation({
     mutationFn: async (email) => {
       const { data } = await axiosSecure.delete(`/users/${email}`);
       return data;
     },
     onSuccess: () => {
       refetch();
-      toast.success("User deleted successfully!");
+      Swal.fire({
+        title: "Deleted!",
+        text: "The user has been removed successfully.",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false
+      });
     },
     onError: (error) => {
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
@@ -54,9 +61,19 @@ const UserManagement = () => {
   };
 
   const handleDelete = (email) => {
-    if (window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
-      deleteUser.mutate(email);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#1A3626",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteUserMutation.mutate(email);
+      }
+    });
   };
 
   return (
@@ -109,7 +126,7 @@ const UserManagement = () => {
                 <td className="py-4 px-4">
                    <div className="flex items-center justify-center gap-2">
                      <button
-                       className="p-2 bg-[#bbf7d0] hover:bg-[#86efac] text-[#1A3626] rounded-lg transition-colors tooltip"
+                       className="p-2 bg-[#bbf7d0] hover:bg-[#86efac] text-[#1A3626] rounded-lg transition-colors"
                        title="Set as User"
                        onClick={() => handleRoleChange(item.email, "user", "approved")}
                        disabled={item.status === "approved" && item.role === "user"}
@@ -117,7 +134,7 @@ const UserManagement = () => {
                        <FaUserCheck />
                      </button>
                      <button
-                       className="p-2 bg-[#1A3626] hover:bg-[#14281c] text-white rounded-lg transition-colors tooltip"
+                       className="p-2 bg-[#1A3626] hover:bg-[#14281c] text-white rounded-lg transition-colors"
                        title="Set as Agent"
                        onClick={() => handleRoleChange(item.email, "agent", "approved")}
                        disabled={item.status === "approved" && item.role === "agent"}
@@ -125,20 +142,17 @@ const UserManagement = () => {
                        <FaUserTie />
                      </button>
                      <button
-                       className="p-2 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg transition-colors tooltip"
+                       className="p-2 bg-red-50 hover:bg-red-100 text-red-500 rounded-lg transition-colors"
                        title="Block User"
                        onClick={() => handleRoleChange(item.email, item.role, "Blocked")}
                        disabled={item.status === "Blocked"}
                      >
                        <FaUserSlash />
                      </button>
-                      <button
+                     <button
                         className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors"
-                        onClick={() => {
-                          if (window.confirm("Are you sure you want to delete this user?")) {
-                            deleteUser.mutate(item.email);
-                          }
-                        }}
+                        title="Delete User"
+                        onClick={() => handleDelete(item.email)}
                       >
                         <FaTrash />
                       </button>
