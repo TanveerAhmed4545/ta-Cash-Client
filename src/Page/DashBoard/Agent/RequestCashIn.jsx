@@ -50,6 +50,17 @@ const RequestCashIn = () => {
              
              <div className="space-y-5">
                 <div>
+                   <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Request To</label>
+                   <div className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 flex items-center gap-3">
+                      <div className="w-8 h-8 bg-[#1A3626] rounded-full flex items-center justify-center text-white text-[10px] font-bold">ADM</div>
+                      <div>
+                         <p className="text-sm font-bold text-gray-800">System Admin</p>
+                         <p className="text-[10px] text-gray-500 font-medium uppercase tracking-tight">Official Balance Provider</p>
+                      </div>
+                   </div>
+                </div>
+
+                <div>
                   <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-wider mb-2">Amount</label>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-bold">$</span>

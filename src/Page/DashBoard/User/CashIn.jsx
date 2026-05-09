@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useStatus from "../../../hooks/useStatus";
 import { useAuth } from "../../../Provider/AuthProvider";
 
 const CashIn = () => {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [agentEmail, setAgentEmail] = useState("");
   const [status, isLoading] = useStatus();
   const [amount, setAmount] = useState("");
   const [agents, setAgents] = useState([]);
   const axiosSecure = useAxiosSecure();
-  const { user } = useAuth();
+  const { user, role } = useAuth();
   const userEmail = user?.email;
+
+  useEffect(() => {
+    if (role === "agent") {
+      navigate("/dashboard/requestCashIn");
+    }
+  }, [role, navigate]);
   useEffect(() => {
     const fetchAgents = async () => {
       try {
