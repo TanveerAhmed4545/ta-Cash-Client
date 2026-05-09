@@ -132,10 +132,13 @@ const UserManagement = () => {
                      >
                        <FaUserSlash />
                      </button>
-                     <button
-                        className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors tooltip"
-                        title="Delete User"
-                        onClick={() => handleDelete(item.email)}
+                      <button
+                        className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors"
+                        onClick={() => {
+                          if (window.confirm("Are you sure you want to delete this user?")) {
+                            deleteUser.mutate(item.email);
+                          }
+                        }}
                       >
                         <FaTrash />
                       </button>
