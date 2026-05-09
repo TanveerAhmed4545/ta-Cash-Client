@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { FaSearch, FaUserCheck, FaUserTie, FaUserSlash } from "react-icons/fa";
+import { FaSearch, FaUserCheck, FaUserTie, FaUserSlash, FaTrash } from "react-icons/fa";
 
 const UserManagement = () => {
   const [search, setSearch] = useState("");
@@ -35,8 +35,28 @@ const UserManagement = () => {
     },
   });
 
+  const deleteUser = useMutation({
+    mutationFn: async (email) => {
+      const { data } = await axiosSecure.delete(`/users/${email}`);
+      return data;
+    },
+    onSuccess: () => {
+      refetch();
+      toast.success("User deleted successfully!");
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.response?.data?.message || error.message}`);
+    },
+  });
+
   const handleRoleChange = (email, role, status) => {
     updateUserRole.mutate({ email, role, status });
+  };
+
+  const handleDelete = (email) => {
+    if (window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) {
+      deleteUser.mutate(email);
+    }
   };
 
   return (
@@ -112,6 +132,13 @@ const UserManagement = () => {
                      >
                        <FaUserSlash />
                      </button>
+                     <button
+                        className="p-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-lg transition-colors tooltip"
+                        title="Delete User"
+                        onClick={() => handleDelete(item.email)}
+                      >
+                        <FaTrash />
+                      </button>
                    </div>
                 </td>
               </tr>
