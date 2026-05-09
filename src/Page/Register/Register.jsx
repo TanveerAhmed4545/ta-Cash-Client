@@ -3,7 +3,7 @@ import Lottie from "lottie-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEyeSlash, FaUser, FaPhone, FaEnvelope, FaLock, FaCamera } from "react-icons/fa";
 import { IoMdEye } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import signUpAnimation from "../../assets/cash2.json";
@@ -33,15 +33,14 @@ const Register = () => {
         photoURL: photoURL || `https://ui-avatars.com/api/?name=${data.name}&background=1A3626&color=fff`,
       };
       
-      // Remove the file object from the data sent to server
       delete userData.photo;
 
       const response = await axios.post("https://ta-cash-server.vercel.app/register", userData);
-      response.data && toast.success("Registration Successfully and Please Login");
+      response.data && toast.success("Welcome! Registration Successful. Please Login.");
       reset();
       navigate("/");
     } catch (error) {
-      toast.error("Registration failed");
+      toast.error("Registration failed. Data may be invalid.");
       console.error("Registration failed:", error);
     } finally {
       setUploading(false);
@@ -49,139 +48,166 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] p-6 font-sans text-gray-800">
-      <div className="max-w-6xl w-full bg-white rounded-[2.5rem] shadow-xl overflow-hidden flex flex-col lg:flex-row-reverse min-h-[650px] border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-[#f0f9f4] p-6 font-sans relative overflow-hidden">
+      {/* Dynamic background elements */}
+      <div className="absolute top-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#1A3626] rounded-full blur-[140px] opacity-[0.07]"></div>
+      <div className="absolute bottom-[-10%] left-[-10%] w-[45%] h-[45%] bg-[#bbf7d0] rounded-full blur-[140px] opacity-30"></div>
+      
+      <div className="max-w-6xl w-full backdrop-blur-md bg-white/70 rounded-[3rem] shadow-[0_32px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row-reverse min-h-[750px] border border-white/50 relative z-10">
         
-        {/* Right Side - Animation & Branding (Reversed for Register) */}
-        <div className="lg:w-1/2 bg-[#ecfdf5] p-12 flex flex-col justify-center items-center relative overflow-hidden hidden lg:flex">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/40 rounded-full -mr-32 -mt-32"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#bbf7d0]/40 rounded-full -ml-24 -mb-24"></div>
+        {/* Right Side - Visual Branding */}
+        <div className="lg:w-1/2 bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] p-12 flex flex-col justify-center items-center relative overflow-hidden hidden lg:flex">
+          <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
           
-          <div className="w-full max-w-md relative z-10 flex flex-col items-center">
-             <div className="mb-8 flex items-center gap-3">
-               <div className="grid grid-cols-2 gap-1 w-10 h-10">
-                 <div className="bg-[#1A3626] rounded-tl-xl rounded-br-xl"></div>
-                 <div className="bg-[#1A3626] rounded-tr-xl rounded-bl-xl"></div>
-                 <div className="bg-[#1A3626] rounded-tr-xl rounded-bl-xl"></div>
-                 <div className="bg-[#1A3626] rounded-tl-xl rounded-br-xl"></div>
-               </div>
-               <h2 className="text-3xl font-bold tracking-wider text-[#1A3626] uppercase">Ta Cash</h2>
+          <div className="w-full max-w-md relative z-10 flex flex-col items-center text-white">
+             <div className="mb-10 flex items-center gap-4 group cursor-pointer">
+                <div className="grid grid-cols-2 gap-1.5 w-12 h-12 transition-transform duration-500 group-hover:scale-110">
+                  <div className="bg-white rounded-full"></div>
+                  <div className="bg-[#bbf7d0] rounded-full"></div>
+                  <div className="bg-[#bbf7d0] rounded-full"></div>
+                  <div className="bg-white rounded-full"></div>
+                </div>
+                <h2 className="text-4xl font-black tracking-tighter uppercase italic">Ta Cash</h2>
              </div>
-             <Lottie
-               className="w-full drop-shadow-xl"
-               animationData={signUpAnimation}
-               loop={true}
-             />
-             <div className="text-center mt-8">
-                <h3 className="text-2xl font-bold text-[#1A3626] mb-2">Join Our Community</h3>
-                <p className="text-[#1A3626]/70">Create an account to start managing your assets with ease.</p>
+             
+             <div className="relative">
+                <div className="absolute inset-0 bg-white/10 blur-[60px] rounded-full"></div>
+                <Lottie
+                  className="w-full relative z-10 scale-105"
+                  animationData={signUpAnimation}
+                  loop={true}
+                />
+             </div>
+             
+             <div className="text-center mt-10 space-y-4">
+                <h3 className="text-3xl font-bold tracking-tight">Financial Freedom</h3>
+                <p className="text-white/70 text-lg leading-relaxed max-w-xs mx-auto">
+                   Secure your future today. Join thousands of users managing assets worldwide.
+                </p>
              </div>
           </div>
         </div>
 
         {/* Left Side - Register Form */}
-        <div className="lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center bg-white relative">
+        <div className="lg:w-1/2 p-10 lg:p-20 flex flex-col justify-center">
           
-          <div className="lg:hidden flex items-center gap-2 mb-8 justify-center">
-               <div className="grid grid-cols-2 gap-[2px] w-8 h-8">
-                 <div className="bg-[#1A3626] rounded-tl-[10px] rounded-br-[10px]"></div>
-                 <div className="bg-[#1A3626] rounded-tr-[10px] rounded-bl-[10px]"></div>
-                 <div className="bg-[#1A3626] rounded-tr-[10px] rounded-bl-[10px]"></div>
-                 <div className="bg-[#1A3626] rounded-tl-[10px] rounded-br-[10px]"></div>
+          <div className="lg:hidden flex items-center gap-3 mb-10 justify-center">
+               <div className="grid grid-cols-2 gap-1 w-8 h-8">
+                 <div className="bg-[#1A3626] rounded-full"></div>
+                 <div className="bg-[#1A3626] rounded-full"></div>
+                 <div className="bg-[#1A3626] rounded-full"></div>
+                 <div className="bg-[#1A3626] rounded-full"></div>
                </div>
-               <h2 className="text-2xl font-bold tracking-wider text-[#1A3626] uppercase">Ta Cash</h2>
+               <h2 className="text-2xl font-black text-[#1A3626] uppercase">Ta Cash</h2>
           </div>
 
-          <div className="mb-8 text-center lg:text-left">
-            <h1 className="text-4xl font-bold text-gray-900 mb-3">Create Account</h1>
-            <p className="text-gray-500">Sign up to get started with Ta Cash.</p>
+          <div className="mb-10 text-center lg:text-left">
+            <h1 className="text-4xl font-black text-gray-900 mb-3 tracking-tighter uppercase">Join Us</h1>
+            <p className="text-gray-600 font-bold uppercase tracking-widest text-xs">Create your secure digital vault.</p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-               <div>
-                 <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+               <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+                   <FaUser className="text-[#1A3626]/60" /> Full Name
+                 </label>
                  <input
                    type="text"
                    placeholder="John Doe"
-                   className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none"
+                   className="w-full px-6 py-4 rounded-2xl border-2 border-gray-100 bg-white/50 focus:bg-white focus:ring-4 focus:ring-[#1A3626]/10 focus:border-[#1A3626] transition-all outline-none text-gray-800 font-semibold placeholder:text-gray-400"
                    {...register("name", { required: true })}
                  />
-                 {errors.name && <p className="text-red-500 text-xs mt-1 font-medium">Name is required</p>}
+                 {errors.name && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">Required</p>}
                </div>
 
-               <div>
-                 <label className="block text-sm font-semibold text-gray-700 mb-2">Phone Number</label>
+               <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+                   <FaPhone className="text-[#1A3626]/60" /> Phone
+                 </label>
                  <input
                    type="text"
-                   placeholder="+1 234 567 890"
-                   className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none"
+                   placeholder="+123..."
+                   className="w-full px-6 py-4 rounded-2xl border-2 border-gray-100 bg-white/50 focus:bg-white focus:ring-4 focus:ring-[#1A3626]/10 focus:border-[#1A3626] transition-all outline-none text-gray-800 font-semibold placeholder:text-gray-400"
                    {...register("phone", { required: true })}
                  />
-                 {errors.phone && <p className="text-red-500 text-xs mt-1 font-medium">Phone is required</p>}
+                 {errors.phone && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">Required</p>}
                </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Profile Picture</label>
-              <input
-                type="file"
-                accept="image/*"
-                className="w-full px-5 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-[#1A3626] file:text-white hover:file:bg-[#14281c]"
-                {...register("photo")}
-              />
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+                <FaCamera className="text-[#1A3626]/60" /> Identity / Photo
+              </label>
+              <div className="relative group">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="w-full px-6 py-4 rounded-2xl border-2 border-dashed border-gray-200 bg-white/30 focus:bg-white transition-all outline-none text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:bg-[#1A3626] file:text-white hover:file:scale-105 file:transition-transform cursor-pointer"
+                  {...register("photo")}
+                />
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address</label>
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+                <FaEnvelope className="text-[#1A3626]/60" /> Email
+              </label>
               <input
                 type="email"
-                placeholder="Enter your email"
-                className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none"
+                placeholder="example@mail.com"
+                className="w-full px-6 py-4 rounded-2xl border-2 border-gray-100 bg-white/50 focus:bg-white focus:ring-4 focus:ring-[#1A3626]/10 focus:border-[#1A3626] transition-all outline-none text-gray-800 font-semibold placeholder:text-gray-400"
                 {...register("email", { required: true })}
               />
-              {errors.email && <p className="text-red-500 text-xs mt-1 font-medium">Email is required</p>}
+              {errors.email && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">Email is required</p>}
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">PIN / Password (5-digit)</label>
-              <div className="relative">
+            <div className="space-y-2">
+              <label className="text-[10px] font-black text-gray-700 uppercase tracking-[0.2em] flex items-center gap-2 px-1">
+                <FaLock className="text-[#1A3626]/60" /> Secure 5-Digit PIN
+              </label>
+              <div className="relative group">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Enter a 5-digit PIN"
-                  className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#1A3626]/20 focus:border-[#1A3626] transition-all outline-none"
+                  placeholder="•••••"
+                  className="w-full px-6 py-4 rounded-2xl border-2 border-gray-100 bg-white/50 focus:bg-white focus:ring-4 focus:ring-[#1A3626]/10 focus:border-[#1A3626] transition-all outline-none text-gray-800 font-semibold tracking-[1em] placeholder:tracking-normal placeholder:text-gray-400"
                   {...register("password", {
-                    required: "Password is required",
+                    required: "Required",
                     pattern: {
                       value: /^\d{5}$/,
-                      message: "Must be a 5-digit number",
+                      message: "Must be 5 digits",
                     },
                   })}
                 />
                 <button
                   type="button"
-                  className="absolute top-1/2 -translate-y-1/2 right-4 text-gray-400 hover:text-gray-600"
+                  className="absolute top-1/2 -translate-y-1/2 right-6 text-gray-300 hover:text-[#1A3626] transition-colors"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash size={20} /> : <IoMdEye size={20} />}
+                  {showPassword ? <FaEyeSlash size={22} /> : <IoMdEye size={22} />}
                 </button>
               </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1 font-medium">{errors.password.message}</p>}
+              {errors.password && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">{errors.password.message}</p>}
             </div>
 
             <button
               type="submit"
               disabled={uploading}
-              className="w-full py-4 mt-6 bg-[#1A3626] text-white font-bold rounded-xl hover:bg-[#14281c] hover:shadow-lg hover:-translate-y-0.5 transition-all active:translate-y-0 disabled:opacity-70"
+              className="w-full py-5 mt-8 bg-[#1A3626] text-white font-black text-lg uppercase tracking-widest rounded-2xl hover:bg-[#14281c] hover:shadow-[0_20px_40px_rgba(26,54,38,0.2)] hover:-translate-y-1 transition-all duration-300 active:translate-y-0 disabled:opacity-70 flex justify-center items-center"
             >
-              {uploading ? "Signing Up..." : "Sign Up"}
+              {uploading ? (
+                <div className="flex items-center gap-3">
+                  <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Initializing...
+                </div>
+              ) : "Establish Account"}
             </button>
           </form>
 
-          <p className="text-center mt-8 text-gray-500 font-medium text-sm">
-            Already have an account?{" "}
-            <Link to="/" className="text-[#1A3626] font-bold hover:underline">
-              Log In
+          <p className="text-center mt-10 text-gray-400 font-bold uppercase tracking-tighter text-sm">
+            Existing holder?{" "}
+            <Link to="/" className="text-[#1A3626] border-b-2 border-[#1A3626]/20 hover:border-[#1A3626] transition-all ml-1">
+              Access Vault
             </Link>
           </p>
         </div>
