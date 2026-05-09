@@ -15,6 +15,11 @@ const AdminMenu = () => {
         address={"allTransactions"}
         icon={GrTransaction}
       ></MenuItem>
+      <MenuItem
+        label={"Manage Requests"}
+        address={"manage-transactions"}
+        icon={GrTransaction}
+      ></MenuItem>
     </>
   );
 };

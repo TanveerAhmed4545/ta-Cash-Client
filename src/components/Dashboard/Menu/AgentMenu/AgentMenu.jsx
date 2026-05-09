@@ -15,6 +15,11 @@ const AgentMenu = () => {
         address={"agentTransactions"}
         icon={GrTransaction}
       ></MenuItem>
+      <MenuItem
+        label={"Request Cash-In"}
+        address={"requestCashIn"}
+        icon={FaMoneyBillTransfer}
+      ></MenuItem>
     </>
   );
 };
