@@ -135,7 +135,7 @@ const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/login", {
+      const response = await axios.post("https://ta-cash-server.vercel.app/login", {
         email,
         password,
       });

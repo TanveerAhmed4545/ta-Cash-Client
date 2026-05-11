@@ -15,7 +15,7 @@ export const uploadImage = async (imageFile) => {
 
   try {
     // Calling our local backend proxy
-    const res = await axios.post("http://localhost:5000/upload-image", formData, {
+    const res = await axios.post("https://ta-cash-server.vercel.app/upload-image", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
