@@ -35,7 +35,7 @@ const Register = () => {
       
       delete userData.photo;
 
-      const response = await axios.post("https://ta-cash-server.vercel.app/register", userData);
+      const response = await axios.post("http://localhost:5000/register", userData);
       response.data && toast.success("Welcome! Registration Successful. Please Login.");
       reset();
       navigate("/");

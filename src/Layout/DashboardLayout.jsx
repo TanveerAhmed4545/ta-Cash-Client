@@ -29,9 +29,14 @@ const DashboardLayout = () => {
     { name: "Profile", path: "/dashboard/profile" },
     { name: "Send Money (Transfer)", path: "/dashboard/send-Money" },
     { name: "Transaction History", path: "/dashboard/userTransactions" },
+    { name: "My Statistics", path: "/dashboard/user-stats" },
     // Admin specific
     { name: "User Management", path: "/dashboard/user-Management" },
     { name: "All Transactions", path: "/dashboard/allTransactions" },
+    { name: "Manage Requests", path: "/dashboard/manage-transactions" },
+    { name: "Admin Analytics", path: "/dashboard/admin-analytics" },
+    { name: "Audit Logs", path: "/dashboard/audit-logs" },
+    { name: "System Settings", path: "/dashboard/system-settings" },
     // Agent specific
     { name: "Agent Transactions", path: "/dashboard/agentTransactions" },
     { name: "Transfer Management", path: "/dashboard/transferManagement" },
@@ -126,7 +131,10 @@ const DashboardLayout = () => {
               >
                 <div className="text-right hidden sm:block">
                   <p className="text-sm font-bold text-gray-800 truncate max-w-[120px]">{user?.name || "Andrew Forbist"}</p>
-                  <p className="text-xs text-gray-500 capitalize">{user?.role || "Admin"}</p>
+                  <div className="flex items-center justify-end gap-2">
+                    <p className="text-[10px] px-1.5 py-0.5 bg-green-50 text-green-600 rounded-full font-bold uppercase">{user?.tier || "Silver"}</p>
+                    <p className="text-xs text-gray-500 capitalize">{user?.role || "Admin"}</p>
+                  </div>
                 </div>
                 <img
                   src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'Andrew Forbist'}&background=1A3626&color=fff`}

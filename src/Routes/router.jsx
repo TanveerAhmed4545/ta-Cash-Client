@@ -13,6 +13,10 @@ import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
 import Profile from "../Page/DashBoard/Profile/Profile";
+import AdminAnalytics from "../Page/DashBoard/Admin/AdminAnalytics";
+import AuditLogs from "../Page/DashBoard/Admin/AuditLogs";
+import SystemSettings from "../Page/DashBoard/Admin/SystemSettings";
+import UserStats from "../Page/DashBoard/User/UserStats";
 import Login from "../Page/Login/Login";
 import Register from "../Page/Register/Register";
 import AdminRoute from "./AdminRoute";
@@ -68,6 +72,36 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "admin-analytics",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AdminAnalytics />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "audit-logs",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AuditLogs />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "system-settings",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SystemSettings />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "manage-transactions",
         element: (
           <PrivateRoute>
@@ -90,6 +124,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UserTransactions />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "user-stats",
+        element: (
+          <PrivateRoute>
+            <UserStats />
           </PrivateRoute>
         ),
       },

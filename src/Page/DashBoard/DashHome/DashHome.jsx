@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 import useBalance from "../../../hooks/useBalance";
 import { useAuth } from "../../../Provider/AuthProvider";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link } from "react-router-dom";
-import { FaPlus, FaExchangeAlt, FaMoneyBillWave, FaHistory, FaArrowUp, FaArrowDown, FaWallet } from "react-icons/fa";
+import { FaPlus, FaExchangeAlt, FaMoneyBillWave, FaHistory, FaArrowUp, FaArrowDown, FaWallet, FaTrash } from "react-icons/fa";
 import {
   BarChart,
   Bar,
@@ -22,7 +23,78 @@ const DashHome = () => {
   const { user } = useAuth();
   const [balance, isLoading] = useBalance();
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
   const [hasMounted, setHasMounted] = useState(false);
+
+  const handleAddPlan = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: 'Create Saving Plan',
+      html:
+        '<input id="swal-input1" class="swal2-input" placeholder="Plan Title (e.g., Laptop)">' +
+        '<input id="swal-input2" type="number" class="swal2-input" placeholder="Target Amount ($)">' +
+        '<input id="swal-input3" type="number" class="swal2-input" placeholder="Initial Savings ($)">',
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Add Plan',
+      confirmButtonColor: '#1A3626',
+      preConfirm: () => {
+        const title = document.getElementById('swal-input1').value;
+        const target = document.getElementById('swal-input2').value;
+        const current = document.getElementById('swal-input3').value || 0;
+        if (!title || !target) {
+          Swal.showValidationMessage('Please fill out title and target amount');
+        }
+        return { title, target, current };
+      }
+    });
+
+    if (formValues) {
+      try {
+        await axiosSecure.post("/saving-goals", {
+          email: user?.email,
+          title: formValues.title,
+          target: Number(formValues.target),
+          current: Number(formValues.current)
+        });
+        queryClient.invalidateQueries({ queryKey: ["limits", user?.email] });
+        Swal.fire({
+          title: 'Success!',
+          text: 'Saving plan added successfully.',
+          icon: 'success',
+          confirmButtonColor: '#1A3626'
+        });
+      } catch (error) {
+        Swal.fire('Error', 'Could not add saving plan', 'error');
+      }
+    }
+  };
+
+  const handleDeletePlan = async (planId) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#1A3626',
+      confirmButtonText: 'Yes, delete it!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axiosSecure.delete(`/saving-goals/${user?.email}/${planId}`);
+          queryClient.invalidateQueries({ queryKey: ["limits", user?.email] });
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your plan has been deleted.',
+            icon: 'success',
+            confirmButtonColor: '#1A3626'
+          });
+        } catch (error) {
+          Swal.fire('Error!', 'Failed to delete the plan.', 'error');
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     setHasMounted(true);
@@ -199,7 +271,7 @@ const DashHome = () => {
                   <p className="text-xs text-gray-400">Total Savings</p>
                   <p className="text-xl font-bold text-[#1A3626] mt-1">${limits.savingGoals.reduce((sum, g) => sum + g.current, 0).toLocaleString()}</p>
                 </div>
-                <button className="text-xs font-medium text-gray-500 hover:text-[#1A3626]">Add Plan +</button>
+                <button onClick={handleAddPlan} className="text-xs font-medium text-gray-500 hover:text-[#1A3626]">Add Plan +</button>
              </div>
              
              <div className="flex flex-col gap-4">
@@ -214,7 +286,9 @@ const DashHome = () => {
                              <span className="p-1.5 bg-[#ecfdf5] text-[#1A3626] rounded-md"><FaWallet /></span>
                              {goal.title}
                            </div>
-                           <button className="text-gray-400">⋮</button>
+                           <button onClick={() => handleDeletePlan(goal.id)} className="text-red-400 hover:text-red-600 transition-colors p-1">
+                             <FaTrash size={14} />
+                           </button>
                          </div>
                          <div className="w-full bg-gray-100 rounded-full h-1.5 mb-2">
                            <div className={`h-1.5 rounded-full ${idx % 2 === 0 ? 'bg-[#1A3626]' : 'bg-[#bbf7d0]'}`} style={{ width: `${(goal.current / goal.target) * 100}%` }}></div>

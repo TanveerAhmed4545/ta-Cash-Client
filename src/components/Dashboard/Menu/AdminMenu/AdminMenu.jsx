@@ -20,6 +20,21 @@ const AdminMenu = () => {
         address={"manage-transactions"}
         icon={GrTransaction}
       ></MenuItem>
+      <MenuItem
+        label={"Analytics"}
+        address={"admin-analytics"}
+        icon={GrTransaction}
+      ></MenuItem>
+      <MenuItem
+        label={"Audit Logs"}
+        address={"audit-logs"}
+        icon={FaUsersCog}
+      ></MenuItem>
+      <MenuItem
+        label={"System Settings"}
+        address={"system-settings"}
+        icon={FaUsersCog}
+      ></MenuItem>
     </>
   );
 };

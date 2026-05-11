@@ -23,6 +23,11 @@ const UserMenu = () => {
         address={"userTransactions"}
         icon={GrTransaction}
       ></MenuItem>
+      <MenuItem
+        label={"My Statistics"}
+        address={"user-stats"}
+        icon={GrTransaction}
+      ></MenuItem>
     </>
   );
 };
