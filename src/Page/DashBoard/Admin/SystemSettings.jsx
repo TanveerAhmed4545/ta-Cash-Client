@@ -58,17 +58,17 @@ const SystemSettings = () => {
  if (isLoading) return <LoadingSpinner />;
 
  return (
- <div className="container mx-auto px-4 py-8">
+ <div className="w-full py-8">
  <div className="mb-8">
- <h1 className="text-3xl font-black text-base-content flex items-center gap-3">
+ <h1 className="text-2xl md:text-3xl font-black text-base-content flex items-center gap-3">
  <FaCogs className="text-primary" /> System Settings
  </h1>
  <p className="text-neutral-content mt-1">Configure global application behavior and security protocols.</p>
  </div>
 
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
  {/* Maintenance Mode Card */}
- <div className="bg-base-100 rounded-[2rem] p-8 shadow-sm border border-base-300 flex flex-col items-center text-center">
+ <div className="bg-base-100 rounded-2xl md:rounded-[2rem] p-5 md:p-8 shadow-sm border border-base-300 flex flex-col items-center text-center">
  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-colors ${
  config?.maintenanceMode ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'
  }`}>
@@ -102,7 +102,7 @@ const SystemSettings = () => {
  </div>
 
  {/* Security Policy Card (Mock) */}
- <div className="bg-base-100 rounded-[2rem] p-8 shadow-sm border border-base-300 flex flex-col items-center text-center opacity-70 cursor-not-allowed">
+ <div className="bg-base-100 rounded-2xl md:rounded-[2rem] p-5 md:p-8 shadow-sm border border-base-300 flex flex-col items-center text-center opacity-70 cursor-not-allowed">
  <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
  <FaShieldAlt className="text-2xl" />
  </div>
@@ -116,7 +116,7 @@ const SystemSettings = () => {
  </div>
 
  {/* System Logs Config Card (Mock) */}
- <div className="bg-base-100 rounded-[2rem] p-8 shadow-sm border border-base-300 flex flex-col items-center text-center opacity-70 cursor-not-allowed">
+ <div className="bg-base-100 rounded-2xl md:rounded-[2rem] p-5 md:p-8 shadow-sm border border-base-300 flex flex-col items-center text-center opacity-70 cursor-not-allowed">
  <div className="w-16 h-16 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6">
  <FaTools className="text-2xl" />
  </div>

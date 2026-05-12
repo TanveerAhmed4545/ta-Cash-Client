@@ -62,19 +62,19 @@ const Profile = () => {
  };
 
  return (
- <div className="w-full max-w-7xl mx-auto px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+ <div className="w-full max-w-7xl mx-auto py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
  <div className="mb-8">
- <h2 className="text-3xl font-black text-base-content tracking-tight">My Profile</h2>
+ <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">My Profile</h2>
  <p className="text-neutral-content text-neutral-content mt-1 font-medium italic">Manage your account settings and security</p>
  </div>
 
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
  {/* Left Column - User Info Card */}
- <div className="lg:col-span-1 space-y-6">
- <div className="bg-base-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 flex flex-col items-center text-center relative overflow-hidden group">
+ <div className="lg:col-span-1 space-y-4 md:space-y-6">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 flex flex-col items-center text-center relative overflow-hidden group">
  <div className="absolute top-0 left-0 w-full h-1.5 bg-primary"></div>
  <div className="relative mb-6">
- <div className="relative w-32 h-32">
+ <div className="relative w-24 h-24 md:w-32 md:h-32">
  <img
  src={user?.photoURL || `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff&size=128`}
  alt="Profile"
@@ -102,7 +102,7 @@ const Profile = () => {
 
  {/* Virtual Debit Card */}
  <div 
- className="relative w-full h-52 cursor-pointer group"
+ className="relative w-full h-44 md:h-52 cursor-pointer group"
  style={{ perspective: '1200px' }}
  onClick={() => setIsCardFlipped(!isCardFlipped)}
  >
@@ -112,7 +112,7 @@ const Profile = () => {
  >
  {/* Front of Card */}
  <div 
- className="absolute w-full h-full bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] rounded-3xl p-6 text-white shadow-2xl overflow-hidden border border-white/10"
+ className="absolute w-full h-full bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] rounded-2xl md:rounded-3xl p-5 md:p-6 text-white shadow-2xl overflow-hidden border border-white/10"
  style={{ backfaceVisibility: 'hidden' }}
  >
  <div className="relative z-10 h-full flex flex-col justify-between">
@@ -140,7 +140,7 @@ const Profile = () => {
 
  {/* Back of Card */}
  <div 
- className="absolute w-full h-full bg-gradient-to-br from-[#12261b] to-[#1A3626] rounded-3xl text-white shadow-2xl overflow-hidden border border-white/10"
+ className="absolute w-full h-full bg-gradient-to-br from-[#12261b] to-[#1A3626] rounded-2xl md:rounded-3xl text-white shadow-2xl overflow-hidden border border-white/10"
  style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
  >
  <div className="w-full h-12 bg-black/80 mt-6 shadow-inner"></div>
@@ -156,7 +156,7 @@ const Profile = () => {
  </div>
  </div>
 
- <div className="bg-base-100 rounded-3xl p-6 shadow-sm border border-base-300 flex flex-col items-center text-center">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-4 md:p-6 shadow-sm border border-base-300 flex flex-col items-center text-center">
  <h4 className="text-[10px] font-black text-neutral-content mb-4 uppercase tracking-[0.2em]">Personal QR Code</h4>
  <div className="p-4 bg-white rounded-2xl shadow-xl border border-base-300">
  <QRCode value={user?.email || "ta-cash-user"} size={140} fgColor="#1A3626" bgColor="#ffffff" />
@@ -166,21 +166,21 @@ const Profile = () => {
  </div>
 
  {/* Right Column - Details & Settings */}
- <div className="lg:col-span-2 space-y-6">
- <div className="bg-base-100 rounded-3xl p-8 shadow-sm border border-base-300">
- <h4 className="text-lg font-black text-base-content mb-8 flex items-center gap-3">
+ <div className="lg:col-span-2 space-y-4 md:space-y-6">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-sm border border-base-300">
+ <h4 className="text-lg font-black text-base-content mb-5 md:mb-8 flex items-center gap-3">
  <div className="p-2 bg-primary/10 rounded-lg text-primary"><FiUser /></div>
  Account Details
  </h4>
  
- <div className="space-y-6">
+ <div className="space-y-4 md:space-y-6">
  {[
  { label: "Full Name", value: user?.name, icon: <FiUser />, color: "blue", action: "Edit", onClick: () => setEditProfileOpen(true) },
  { label: "Email Address", value: user?.email, icon: <FiMail />, color: "purple", status: "Verified" },
  { label: "Phone Number", value: user?.phone || "+880 1XXX-XXXXXX", icon: <FiPhone />, color: "orange", action: "Update", onClick: () => setEditProfileOpen(true) }
  ].map((item, idx) => (
  <div key={idx} className="flex items-center justify-between py-4 border-b border-base-300 last:border-0 group">
- <div className="flex items-center gap-5">
+ <div className="flex items-center gap-3 md:gap-5">
  <div className={`p-4 rounded-2xl transition-all duration-300 ${
  item.color === 'blue' ? 'bg-blue-500/10 text-blue-500' :
  item.color === 'purple' ? 'bg-purple-500/10 text-purple-500' :
@@ -210,8 +210,8 @@ const Profile = () => {
  </div>
  </div>
 
- <div className="bg-base-100 rounded-3xl p-8 shadow-sm border border-base-300">
- <h4 className="text-lg font-black text-base-content mb-8 flex items-center gap-3">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-sm border border-base-300">
+ <h4 className="text-lg font-black text-base-content mb-5 md:mb-8 flex items-center gap-3">
  <div className="p-2 bg-primary/10 rounded-lg text-primary"><FiShield /></div>
  Security Settings
  </h4>
@@ -242,3 +242,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

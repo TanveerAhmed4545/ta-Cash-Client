@@ -23,10 +23,10 @@ const AuditLogs = () => {
   }
 
   return (
-    <div className="w-full px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="w-full py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
         <div>
-          <h2 className="text-3xl font-black text-base-content tracking-tight">Security Audit</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">Security Audit</h2>
           <p className="text-neutral-content mt-1 font-medium italic">Unalterable history of all administrative and security-critical events.</p>
         </div>
         
@@ -40,10 +40,36 @@ const AuditLogs = () => {
         </div>
       </div>
 
-      <div className="bg-base-100 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
+      <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600"></div>
         
-        <div className="overflow-x-auto p-2">
+        {/* Mobile Card View */}
+        <div className="md:hidden p-3 space-y-3 stagger-children">
+          {logs.length > 0 ? logs.map((log) => {
+            const isSecurity = log.action?.toLowerCase().includes('block') || log.action?.toLowerCase().includes('reject');
+            const isSuccess = log.action?.toLowerCase().includes('approved') || log.action?.toLowerCase().includes('set');
+            return (
+              <div key={log._id} className="p-4 bg-base-200/30 rounded-xl border border-base-300/50">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-base-200 flex items-center justify-center text-primary font-black text-xs border border-base-300">{log.adminEmail?.charAt(0).toUpperCase()}</div>
+                    <p className="text-sm font-bold text-base-content truncate max-w-[140px]">{log.adminEmail}</p>
+                  </div>
+                  <span className="text-[10px] text-neutral-content">{new Date(log.timestamp).toLocaleDateString()}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase ${isSuccess ? 'bg-success/10 text-success' : isSecurity ? 'bg-error/10 text-error' : 'bg-blue-500/10 text-blue-500'}`}>{log.action}</span>
+                  {log.targetEmail && <p className="text-[10px] text-neutral-content truncate max-w-[100px]">{log.targetEmail}</p>}
+                </div>
+              </div>
+            );
+          }) : (
+            <div className="py-12 text-center"><FiShield size={32} className="mx-auto mb-3 opacity-20" /><p className="text-sm font-bold text-base-content">Logs Clear</p></div>
+          )}
+        </div>
+
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto p-2">
           <table className="w-full text-left border-collapse mt-2">
             <thead>
               <tr className="border-b border-base-300">

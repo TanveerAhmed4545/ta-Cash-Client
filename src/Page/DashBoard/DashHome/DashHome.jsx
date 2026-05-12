@@ -228,19 +228,19 @@ const DashHome = () => {
 
   return (
     <div className="w-full text-base-content pb-10 font-sans animate-in fade-in duration-700">
-      <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8">
         
         {/* LEFT COLUMN: Premium Balance Card & Actions */}
-        <div className="flex flex-col gap-8 col-span-1">
+        <div className="flex flex-col gap-4 md:gap-8 col-span-1">
           
           {/* Enhanced Balance Card (Profile Style) */}
-          <div className="relative w-full h-64 group cursor-pointer" style={{ perspective: '1200px' }}>
-            <div className="absolute w-full h-full bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] rounded-[2.5rem] p-8 text-white shadow-2xl overflow-hidden border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
+          <div className="relative w-full h-52 md:h-64 group cursor-pointer" style={{ perspective: '1200px' }}>
+            <div className="absolute w-full h-full bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 text-white shadow-2xl overflow-hidden border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
               <div className="relative z-10 h-full flex flex-col justify-between">
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Available Balance</p>
-                    <h2 className="text-4xl font-black tracking-tight">
+                    <p className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em] mb-1 md:mb-2">Available Balance</p>
+                    <h2 className="text-3xl md:text-4xl font-black tracking-tight">
                       {isLoading ? (
                         <div className="h-10 bg-white/10 animate-pulse rounded-xl w-32"></div>
                       ) : (
@@ -255,7 +255,7 @@ const DashHome = () => {
                 </div>
 
                 <div className="mt-auto">
-                  <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                  <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-2 md:mb-4 flex items-center gap-2">
                     <FaShieldAlt className="text-green-400" /> Secure Wallet
                   </p>
                   <div className="flex justify-between items-end">
@@ -278,7 +278,7 @@ const DashHome = () => {
           </div>
 
           {/* Action Grid */}
-          <div className="grid grid-cols-5 gap-2 px-1">
+          <div className="grid grid-cols-5 gap-3 px-1">
             {[
               { to: "/dashboard/cashIn", icon: FaPlus, label: "Add" },
               { to: "/dashboard/send-Money", icon: FaExchangeAlt, label: "Send" },
@@ -287,15 +287,15 @@ const DashHome = () => {
               { to: "/dashboard/userTransactions", icon: FaHistory, label: "Logs" }
             ].map((action, idx) => (
               action.to ? (
-                <Link key={idx} to={action.to} className="flex flex-col items-center gap-3 group">
-                  <div className="w-12 h-12 rounded-2xl border border-base-300 bg-base-100 flex items-center justify-center text-neutral-content group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
+                <Link key={idx} to={action.to} className="flex flex-col items-center gap-2 md:gap-3 group">
+                  <div className="w-14 h-14 md:w-12 md:h-12 rounded-2xl border border-base-300 bg-base-100 flex items-center justify-center text-neutral-content group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-primary/20 active:scale-90">
                     <action.icon size={18} />
                   </div>
                   <span className="text-[10px] font-black text-neutral-content uppercase tracking-wider">{action.label}</span>
                 </Link>
               ) : (
-                <button key={idx} onClick={action.onClick} className="flex flex-col items-center gap-3 group">
-                  <div className="w-12 h-12 rounded-2xl border border-base-300 bg-base-100 flex items-center justify-center text-neutral-content group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
+                <button key={idx} onClick={action.onClick} className="flex flex-col items-center gap-2 md:gap-3 group">
+                  <div className="w-14 h-14 md:w-12 md:h-12 rounded-2xl border border-base-300 bg-base-100 flex items-center justify-center text-neutral-content group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-primary/20 active:scale-90">
                     <action.icon size={18} />
                   </div>
                   <span className="text-[10px] font-black text-neutral-content uppercase tracking-wider">{action.label}</span>
@@ -305,9 +305,9 @@ const DashHome = () => {
           </div>
 
           {/* Daily Limit Card */}
-          <div className="bg-base-100 rounded-[2rem] p-8 shadow-sm border border-base-300 relative overflow-hidden group">
+          <div className="bg-base-100 rounded-2xl md:rounded-[2rem] p-5 md:p-8 shadow-sm border border-base-300 relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform"></div>
-            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-6">Daily Capacity</h3>
+            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-4 md:mb-6">Daily Capacity</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-end">
                 <p className="text-2xl font-black text-base-content">${Number(limits.dailySpent).toLocaleString()}</p>
@@ -321,8 +321,8 @@ const DashHome = () => {
           </div>
 
           {/* Saving Plans */}
-          <div className="bg-base-100 rounded-[2.5rem] p-8 shadow-sm border border-base-300 flex-1 relative overflow-hidden">
-            <div className="flex justify-between items-center mb-8">
+          <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-base-300 flex-1 relative overflow-hidden">
+            <div className="flex justify-between items-center mb-5 md:mb-8">
               <div>
                 <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-1">Financial Goals</h3>
                 <p className="text-2xl font-black text-primary">${limits.savingGoals.reduce((sum, g) => sum + g.current, 0).toLocaleString()}</p>
@@ -364,33 +364,33 @@ const DashHome = () => {
         </div>
 
         {/* MIDDLE COLUMN: Cashflow & Recent */}
-        <div className="flex flex-col gap-8 col-span-1 lg:col-span-2">
+        <div className="flex flex-col gap-4 md:gap-8 col-span-1 lg:col-span-2">
           
           {/* Quick Metrics (Profile Sub-Card Style) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="flex md:grid md:grid-cols-3 gap-3 md:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-1 -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible">
             {[
               { label: "Cash Inflow", amount: income, icon: FaArrowUp, color: "success" },
               { label: "Cash Outflow", amount: outcome, icon: FaArrowDown, color: "error" },
               { label: "Asset Growth", amount: limits.savingGoals.reduce((sum, g) => sum + g.current, 0), icon: FaHistory, color: "primary" }
             ].map((stat, idx) => (
-              <div key={idx} className="bg-base-100 rounded-[2rem] p-6 shadow-sm border border-base-300 relative overflow-hidden group hover:scale-[1.03] transition-all">
+              <div key={idx} className="snap-center min-w-[180px] md:min-w-0 shrink-0 md:shrink bg-base-100 rounded-2xl md:rounded-[2rem] p-4 md:p-6 shadow-sm border border-base-300 relative overflow-hidden group hover:scale-[1.03] transition-all">
                 <div className={`absolute top-0 right-0 w-24 h-24 bg-${stat.color}/5 rounded-full -mr-12 -mt-12 group-hover:scale-125 transition-transform duration-700`}></div>
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex justify-between items-start mb-3 md:mb-6">
                   <div className={`p-3 rounded-2xl bg-${stat.color}/10 text-${stat.color === 'primary' ? 'primary' : stat.color + '-600'}`}>
                     <stat.icon size={18} />
                   </div>
                   <span className="text-[10px] font-black text-neutral-content uppercase tracking-widest">This Month</span>
                 </div>
-                <h3 className="text-2xl font-black text-base-content tracking-tight mb-1">${stat.amount.toLocaleString()}</h3>
+                <h3 className="text-xl md:text-2xl font-black text-base-content tracking-tight mb-1">${stat.amount.toLocaleString()}</h3>
                 <p className="text-[10px] font-black text-neutral-content uppercase tracking-[0.2em]">{stat.label}</p>
               </div>
             ))}
           </div>
 
           {/* Cashflow Chart */}
-          <div className="bg-base-100 rounded-[2.5rem] p-8 shadow-sm border border-base-300 relative overflow-hidden">
+          <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] p-4 md:p-8 shadow-sm border border-base-300 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent opacity-30 rounded-b-full"></div>
-            <div className="flex justify-between items-center mb-10">
+            <div className="flex justify-between items-center mb-6 md:mb-10">
               <div>
                 <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-1">Financial Pulse</h3>
                 <p className="text-3xl font-black text-base-content tracking-tight">${(income + balance).toLocaleString()}</p>
@@ -412,9 +412,9 @@ const DashHome = () => {
               </div>
             </div>
             
-            <div className="h-72 w-full mt-4">
+            <div className="h-48 md:h-72 w-full mt-4">
               {hasMounted && (
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <BarChart data={cashflowData} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-5" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: 'currentColor', fontSize: 10, fontWeight: 900}} dy={10} />
@@ -429,14 +429,48 @@ const DashHome = () => {
           </div>
 
           {/* Recent Transactions (Agent Desk Style) */}
-          <div className="bg-base-100 rounded-[2.5rem] p-8 shadow-sm border border-base-300 relative overflow-hidden">
+          <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] p-4 md:p-8 shadow-sm border border-base-300 relative overflow-hidden">
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent opacity-30 rounded-b-full"></div>
-            <div className="flex justify-between items-center mb-8">
+            <div className="flex justify-between items-center mb-5 md:mb-8">
               <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em]">Transaction Ledger</h3>
-              <Link to="/dashboard/userTransactions" className="text-[10px] font-black text-primary hover:underline uppercase tracking-wider bg-primary/5 px-4 py-2 rounded-xl">View All</Link>
+              <Link to="/dashboard/userTransactions" className="text-[10px] font-black text-primary hover:underline uppercase tracking-wider bg-primary/5 px-3 md:px-4 py-1.5 md:py-2 rounded-xl">View All</Link>
             </div>
             
-            <div className="overflow-x-auto">
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-3 stagger-children">
+              {history.length > 0 ? history.slice(0, 5).map((tx, idx) => (
+                <div key={idx} className="flex items-center justify-between p-3.5 bg-base-200/50 rounded-xl border border-base-300/50 active:scale-[0.98] transition-transform">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs ${
+                      tx.type === 'cash-in' ? 'bg-blue-500/10 text-blue-500' :
+                      tx.type === 'cash-out' ? 'bg-orange-500/10 text-orange-500' :
+                      'bg-green-500/10 text-green-500'
+                    }`}>
+                      {tx.type === 'cash-in' ? '↓' : tx.type === 'cash-out' ? '↑' : '→'}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-base-content capitalize">{tx.type?.replace('-', ' ') || "Payment"}</p>
+                      <p className="text-[10px] text-neutral-content">{tx.time ? new Date(tx.time).toISOString().split('T')[0] : "—"}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-black text-base-content">${Number(tx.amount || 0).toLocaleString()}</p>
+                    <span className={`text-[9px] font-bold uppercase ${
+                      tx.status === 'reject' ? 'text-error' :
+                      tx.status === 'pending' ? 'text-warning' :
+                      'text-success'
+                    }`}>
+                      {tx.status === 'reject' ? 'Failed' : tx.status === 'approve' || !tx.status ? 'Cleared' : 'Pending'}
+                    </span>
+                  </div>
+                </div>
+              )) : (
+                <div className="py-8 text-center text-neutral-content font-bold uppercase tracking-widest text-[10px]">No recent volume</div>
+              )}
+            </div>
+
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-base-300">
@@ -484,14 +518,14 @@ const DashHome = () => {
         </div>
 
         {/* RIGHT COLUMN: Statistics Donut & Activity */}
-        <div className="flex flex-col gap-8 col-span-1 xl:col-span-1">
+        <div className="flex flex-col gap-4 md:gap-8 col-span-1 xl:col-span-1">
           {/* Statistic Card */}
-          <div className="bg-base-100 rounded-[2.5rem] p-8 shadow-sm border border-base-300 relative overflow-hidden">
-            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-8">Asset Analysis</h3>
+          <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-base-300 relative overflow-hidden">
+            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-5 md:mb-8">Asset Analysis</h3>
             
-            <div className="h-48 w-full relative mb-8">
+            <div className="h-36 md:h-48 w-full relative mb-5 md:mb-8">
               {hasMounted && (
-                <ResponsiveContainer width="100%" height="100%">
+                <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <PieChart>
                     <Pie
                       data={pieData}
@@ -534,10 +568,10 @@ const DashHome = () => {
           </div>
 
           {/* Recent Activity Timeline */}
-          <div className="bg-base-100 rounded-[2.5rem] p-8 shadow-sm border border-base-300 flex-1 relative overflow-hidden">
-            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-10">Live Stream</h3>
+          <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] p-5 md:p-8 shadow-sm border border-base-300 flex-1 relative overflow-hidden">
+            <h3 className="text-xs font-black text-neutral-content uppercase tracking-[0.2em] mb-6 md:mb-10">Live Stream</h3>
             
-            <div className="space-y-8 relative">
+            <div className="space-y-5 md:space-y-8 relative">
               <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-base-300 border-dashed"></div>
               {activities.length === 0 ? (
                 <p className="text-[10px] font-black text-neutral-content uppercase tracking-widest text-center py-10">Silent Stream</p>

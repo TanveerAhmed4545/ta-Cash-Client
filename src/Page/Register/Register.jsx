@@ -50,11 +50,11 @@ const Register = () => {
  };
 
  return (
- <div className="min-h-screen flex items-center justify-center bg-base-200 p-6 font-sans relative overflow-hidden transition-colors duration-300">
+ <div className="min-h-screen flex items-center justify-center bg-base-200 p-4 md:p-6 font-sans relative overflow-hidden transition-colors duration-300">
  {/* Theme Toggle */}
  <button 
  onClick={toggleTheme}
- className="fixed top-8 right-8 p-4 bg-base-100 rounded-full shadow-lg border border-base-300 z-[100] hover:scale-110 transition-transform text-base-content"
+ className="fixed top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-base-100 rounded-full shadow-lg border border-base-300 z-[100] hover:scale-110 active:scale-95 transition-transform text-base-content"
  >
  {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} className="text-yellow-400" />}
  </button>
@@ -63,7 +63,7 @@ const Register = () => {
  <div className="absolute top-[-10%] right-[-10%] w-[45%] h-[45%] bg-primary rounded-full blur-[140px] opacity-10"></div>
  <div className="absolute bottom-[-10%] left-[-10%] w-[45%] h-[45%] bg-primary rounded-full blur-[140px] opacity-5"></div>
  
- <div className="max-w-6xl w-full backdrop-blur-md bg-base-100/70 rounded-[3rem] shadow-[0_32px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row-reverse min-h-[750px] border border-white/20 relative z-10">
+ <div className="max-w-6xl w-full backdrop-blur-md bg-base-100/70 rounded-2xl md:rounded-[3rem] shadow-[0_32px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row-reverse min-h-0 md:min-h-[750px] border border-white/20 relative z-10">
  
  {/* Right Side - Visual Branding (Always Dark) */}
  <div className="lg:w-1/2 bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] p-12 flex flex-col justify-center items-center relative overflow-hidden hidden lg:flex">
@@ -95,10 +95,20 @@ const Register = () => {
  </div>
 
  {/* Left Side - Register Form */}
- <div className="lg:w-1/2 p-10 lg:p-20 flex flex-col justify-center bg-base-100">
- <div className="mb-10 text-center lg:text-left">
- <h1 className="text-4xl font-black text-base-content mb-3 tracking-tighter uppercase">Join Us</h1>
- <p className="text-neutral-content text-neutral-content font-bold uppercase tracking-widest text-xs">Create your secure digital vault.</p>
+ <div className="lg:w-1/2 p-6 md:p-10 lg:p-20 flex flex-col justify-center bg-base-100">
+ {/* Mobile Logo */}
+ <div className="flex lg:hidden items-center justify-center gap-3 mb-4">
+ <div className="grid grid-cols-2 gap-1 w-9 h-9">
+ <div className="bg-primary rounded-full"></div>
+ <div className="bg-primary rounded-full opacity-60"></div>
+ <div className="bg-primary rounded-full opacity-60"></div>
+ <div className="bg-primary rounded-full"></div>
+ </div>
+ <h2 className="text-xl font-black tracking-tighter uppercase italic text-primary">Ta Cash</h2>
+ </div>
+ <div className="mb-6 md:mb-10 text-center lg:text-left">
+ <h1 className="text-3xl md:text-4xl font-black text-base-content mb-2 md:mb-3 tracking-tighter uppercase">Join Us</h1>
+ <p className="text-neutral-content font-bold uppercase tracking-widest text-xs">Create your secure digital vault.</p>
  </div>
 
  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -110,7 +120,7 @@ const Register = () => {
  <input
  type="text"
  placeholder="John Doe"
- className="w-full px-6 py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold"
+ className="w-full px-5 md:px-6 py-3.5 md:py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold"
  {...register("name", { required: true })}
  />
  {errors.name && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">Required</p>}
@@ -149,7 +159,7 @@ const Register = () => {
  <input
  type="email"
  placeholder="example@mail.com"
- className="w-full px-6 py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold"
+ className="w-full px-5 md:px-6 py-3.5 md:py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold"
  {...register("email", { required: true })}
  />
  {errors.email && <p className="text-red-500 text-[10px] mt-1 font-black uppercase tracking-wider px-1">Email is required</p>}
@@ -163,7 +173,7 @@ const Register = () => {
  <input
  type={showPassword ? "text" : "password"}
  placeholder="•••••"
- className="w-full px-6 py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold tracking-[1em] placeholder:tracking-normal"
+ className="w-full px-5 md:px-6 py-3.5 md:py-4 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all outline-none text-base-content font-semibold tracking-[1em] placeholder:tracking-normal"
  {...register("password", {
  required: "Required",
  pattern: { value: /^\d{5}$/, message: "Must be 5 digits" },
@@ -179,7 +189,7 @@ const Register = () => {
  <button
  type="submit"
  disabled={uploading}
- className="w-full py-5 mt-8 bg-primary text-white font-black text-lg uppercase tracking-widest rounded-2xl hover:brightness-110 shadow-lg hover:shadow-primary/20 transition-all duration-300 active:scale-[0.98] disabled:opacity-70 flex justify-center items-center"
+ className="w-full py-4 md:py-5 mt-4 md:mt-8 bg-primary text-white font-black text-base md:text-lg uppercase tracking-widest rounded-2xl hover:brightness-110 shadow-lg hover:shadow-primary/20 transition-all duration-300 active:scale-[0.97] disabled:opacity-70 flex justify-center items-center"
  >
  {uploading ? (
  <div className="flex items-center gap-3">
@@ -190,7 +200,7 @@ const Register = () => {
  </button>
  </form>
 
- <p className="text-center mt-10 text-neutral-content text-neutral-content font-bold uppercase tracking-tighter text-sm">
+ <p className="text-center mt-6 md:mt-10 text-neutral-content font-bold uppercase tracking-tighter text-sm">
  Existing holder?{" "}
  <Link to="/" className="text-primary border-b-2 border-primary/20 hover:border-primary transition-all ml-1">
  Access Vault

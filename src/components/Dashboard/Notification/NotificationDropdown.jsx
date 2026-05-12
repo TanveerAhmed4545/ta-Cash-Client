@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FiBell, FiCheckCircle, FiAlertCircle, FiInfo, FiArrowDown, FiArrowUp, FiSend, FiRotateCw } from "react-icons/fi";
 import { formatDistanceToNow } from "date-fns";
+import { Link } from "react-router-dom";
 
 const NotificationDropdown = ({ notifications, onMarkAllRead, onRefetch }) => {
  const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +36,7 @@ const NotificationDropdown = ({ notifications, onMarkAllRead, onRefetch }) => {
  {isOpen && (
  <>
  <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)}></div>
- <div className="absolute right-0 top-full mt-3 w-80 md:w-96 bg-base-100 rounded-2xl shadow-xl border border-base-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+ <div className="absolute -right-12 md:right-0 top-full mt-3 w-[calc(100vw-32px)] md:w-96 bg-base-100 rounded-2xl shadow-xl border border-base-300 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
  {/* Header */}
  <div className="p-4 border-b border-gray-50 flex justify-between items-center bg-base-200/50">
  <h4 className="font-bold text-base-content">Notifications</h4>
@@ -105,9 +106,13 @@ const NotificationDropdown = ({ notifications, onMarkAllRead, onRefetch }) => {
 
  {/* Footer */}
  <div className="p-3 border-t border-gray-50 text-center bg-base-200/50">
- <button className="text-xs font-bold text-neutral-content hover:text-primary transition-colors">
+ <Link 
+   to="/dashboard/notifications" 
+   onClick={() => setIsOpen(false)}
+   className="text-xs font-bold text-neutral-content hover:text-primary transition-colors block w-full py-1"
+ >
  View All Notifications
- </button>
+ </Link>
  </div>
  </div>
  </>

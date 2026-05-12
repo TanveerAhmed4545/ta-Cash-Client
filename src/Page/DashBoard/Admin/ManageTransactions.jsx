@@ -68,10 +68,10 @@ const ManageTransactions = () => {
   const pendingCount = transactions.filter(t => t.status === 'pending').length;
 
   return (
-    <div className="w-full px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="w-full py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
         <div>
-          <h2 className="text-3xl font-black text-base-content tracking-tight">Request Pipeline</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">Request Pipeline</h2>
           <p className="text-neutral-content mt-1 font-medium italic">Authorize or decline high-volume cash flow requests.</p>
         </div>
         
@@ -85,10 +85,46 @@ const ManageTransactions = () => {
         </div>
       </div>
 
-      <div className="bg-base-100 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
+      <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-warning to-error"></div>
         
-        <div className="overflow-x-auto p-2">
+        {/* Mobile Card View */}
+        <div className="md:hidden p-3 space-y-3 stagger-children">
+          {transactions.length > 0 ? transactions.map((tr) => {
+            const isPending = tr.status === "pending";
+            const isApproved = tr.status === "approved";
+            return (
+              <div key={tr._id} className="p-4 bg-base-200/30 rounded-xl border border-base-300/50">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-base-200 text-neutral-content"><FiUser size={16} /></div>
+                    <div>
+                      <p className="text-sm font-bold text-base-content">{tr.userEmail === 'admin' ? tr.agentEmail : tr.userEmail}</p>
+                      <p className="text-[10px] font-mono text-neutral-content">REQ: {tr._id.substring(0,8)}</p>
+                    </div>
+                  </div>
+                  <p className="text-base font-black text-base-content">${Number(tr.amount).toLocaleString()}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-lg bg-base-200 text-[10px] font-black uppercase">{tr.type}</span>
+                  {isPending ? (
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => handleAction(tr._id, "approve")} className="w-9 h-9 rounded-xl bg-success/10 text-success flex items-center justify-center active:scale-90 transition-transform"><FiCheckCircle size={16} /></button>
+                      <button onClick={() => handleAction(tr._id, "reject")} className="w-9 h-9 rounded-xl bg-error/10 text-error flex items-center justify-center active:scale-90 transition-transform"><FiXCircle size={16} /></button>
+                    </div>
+                  ) : (
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${isApproved ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>{tr.status}</span>
+                  )}
+                </div>
+              </div>
+            );
+          }) : (
+            <div className="py-12 text-center"><FiActivity size={32} className="mx-auto mb-3 opacity-20" /><p className="text-sm font-bold text-base-content">Queue Clear</p></div>
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto p-2">
           <table className="w-full text-left border-collapse mt-2">
             <thead>
               <tr className="border-b border-base-300">

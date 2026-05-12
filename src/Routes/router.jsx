@@ -13,6 +13,7 @@ import CashOut from "../Page/DashBoard/User/CashOut";
 import SendMoney from "../Page/DashBoard/User/SendMoney";
 import UserTransactions from "../Page/DashBoard/User/UserTransactions";
 import Profile from "../Page/DashBoard/Profile/Profile";
+import Notifications from "../Page/DashBoard/Profile/Notifications";
 import AdminAnalytics from "../Page/DashBoard/Admin/AdminAnalytics";
 import AuditLogs from "../Page/DashBoard/Admin/AuditLogs";
 import SystemSettings from "../Page/DashBoard/Admin/SystemSettings";
@@ -186,6 +187,14 @@ export const router = createBrowserRouter([
  element: (
  <PrivateRoute>
  <Profile />
+ </PrivateRoute>
+ ),
+ },
+ {
+ path: "notifications",
+ element: (
+ <PrivateRoute>
+ <Notifications />
  </PrivateRoute>
  ),
  },

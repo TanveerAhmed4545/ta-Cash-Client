@@ -88,10 +88,10 @@ const TransactionManagement = () => {
   }
 
   return (
-    <div className="w-full px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="w-full py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h2 className="text-3xl font-black text-base-content tracking-tight">Agent Desk</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">Agent Desk</h2>
           <p className="text-neutral-content mt-1 font-medium italic">Process and oversee cash flow requests.</p>
         </div>
         
@@ -112,11 +112,50 @@ const TransactionManagement = () => {
         </div>
       </div>
 
-      <div className="bg-base-100 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
+      <div className="bg-base-100 rounded-2xl md:rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
         {/* Subtle top gradient bar */}
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-accent"></div>
         
-        <div className="overflow-x-auto p-2">
+        {/* Mobile Card View */}
+        <div className="md:hidden p-3 space-y-3 stagger-children">
+          {filteredTransactions.length > 0 ? filteredTransactions.map((transaction) => {
+            const isCashIn = transaction.type === "cash-in";
+            const isPending = transaction.status === "pending";
+            const isApproved = transaction.status === "approve" || transaction.status === "approved";
+            return (
+              <div key={transaction._id} className="p-4 bg-base-200/30 rounded-xl border border-base-300/50">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2 rounded-xl ${isCashIn ? 'bg-blue-500/10 text-blue-500' : 'bg-orange-500/10 text-orange-500'}`}>
+                      {isCashIn ? <FiArrowDownLeft size={16} /> : <FiArrowUpRight size={16} />}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-base-content capitalize">{transaction.type.replace('-', ' ')}</p>
+                      <p className="text-[10px] text-neutral-content">{transaction.userEmail}</p>
+                    </div>
+                  </div>
+                  <p className="text-base font-black text-base-content">${transaction.amount}</p>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase ${isPending ? 'bg-warning/10 text-warning' : isApproved ? 'bg-success/10 text-success' : 'bg-error/10 text-error'}`}>
+                    {isApproved ? 'Cleared' : transaction.status}
+                  </span>
+                  {isPending && (
+                    <div className="flex items-center gap-2">
+                      <button onClick={() => manageTransaction(transaction._id, 'approve')} className="w-9 h-9 rounded-xl bg-success/10 text-success flex items-center justify-center active:scale-90 transition-transform"><FiCheck size={16} /></button>
+                      <button onClick={() => manageTransaction(transaction._id, 'reject')} className="w-9 h-9 rounded-xl bg-error/10 text-error flex items-center justify-center active:scale-90 transition-transform"><FiX size={16} /></button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          }) : (
+            <div className="py-12 text-center"><FiCheck size={32} className="mx-auto mb-3 opacity-20" /><p className="text-sm font-bold text-base-content">All Caught Up</p></div>
+          )}
+        </div>
+
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto p-2">
           <table className="w-full text-left border-collapse mt-2">
             <thead>
               <tr className="border-b border-base-300">

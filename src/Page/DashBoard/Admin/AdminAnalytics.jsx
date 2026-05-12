@@ -29,9 +29,9 @@ const AdminAnalytics = () => {
  if (isLoadingRevenue || isLoadingStats) return <LoadingSpinner />;
 
  return (
- <div className="container mx-auto px-4 py-8">
+ <div className="w-full py-8">
  <div className="mb-10">
- <h1 className="text-3xl font-black text-base-content flex items-center gap-3">
+ <h1 className="text-2xl md:text-3xl font-black text-base-content flex items-center gap-3">
  <FaChartLine className="text-primary" /> Platform Analytics
  </h1>
  <p className="text-neutral-content mt-1">Real-time revenue monitoring and transaction growth trends.</p>
@@ -39,7 +39,7 @@ const AdminAnalytics = () => {
 
  {/* Summary Cards */}
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
- <div className="bg-base-100 p-6 rounded-[2rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-6 rounded-2xl md:rounded-[2rem] shadow-sm border border-base-300">
  <div className="flex items-center gap-4 mb-4">
  <div className="p-3 bg-green-50 text-green-600 rounded-2xl">
  <FaWallet className="text-xl" />
@@ -52,7 +52,7 @@ const AdminAnalytics = () => {
  </div>
  
  {/* Active Users */}
- <div className="bg-base-100 p-6 rounded-[2rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-6 rounded-2xl md:rounded-[2rem] shadow-sm border border-base-300">
  <div className="flex items-center gap-4 mb-4">
  <div className="p-3 bg-blue-50 text-blue-600 rounded-2xl">
  <FaHandHoldingUsd className="text-xl" />
@@ -63,15 +63,15 @@ const AdminAnalytics = () => {
  </div>
  </div>
 
- <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+ <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
  {/* Main Revenue Chart */}
- <div className="bg-base-100 p-8 rounded-[3rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-8 rounded-2xl md:rounded-[3rem] shadow-sm border border-base-300">
  <h3 className="text-xl font-bold text-base-content mb-8 flex items-center justify-between">
  Revenue Trend (Last 7 Days)
  <span className="text-xs bg-gray-100 px-3 py-1 rounded-full text-neutral-content font-bold uppercase">Live Updates</span>
  </h3>
- <div className="h-[300px] w-full">
- <ResponsiveContainer width="100%" height="100%">
+ <div className="h-[200px] md:h-[300px] w-full">
+ <ResponsiveContainer width="100%" height="100%" minWidth={0}>
  <AreaChart data={revenueData}>
  <defs>
  <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -109,10 +109,10 @@ const AdminAnalytics = () => {
  </div>
 
  {/* Transaction Volume Bar Chart */}
- <div className="bg-base-100 p-8 rounded-[3rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-8 rounded-2xl md:rounded-[3rem] shadow-sm border border-base-300">
  <h3 className="text-xl font-bold text-base-content mb-8">Transaction Volume by Type</h3>
- <div className="h-[300px] w-full">
- <ResponsiveContainer width="100%" height="100%">
+ <div className="h-[200px] md:h-[300px] w-full">
+ <ResponsiveContainer width="100%" height="100%" minWidth={0}>
  <BarChart data={dashboardStats?.transactionVolume || []}>
  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12}} />

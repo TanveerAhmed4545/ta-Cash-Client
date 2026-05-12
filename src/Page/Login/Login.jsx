@@ -37,11 +37,11 @@ const Login = () => {
  };
 
  return (
- <div className="min-h-screen flex items-center justify-center bg-base-200 p-6 font-sans relative overflow-hidden transition-colors duration-300">
+ <div className="min-h-screen flex items-center justify-center bg-base-200 p-4 md:p-6 font-sans relative overflow-hidden transition-colors duration-300">
  {/* Theme Toggle in Login */}
  <button 
  onClick={toggleTheme}
- className="fixed top-8 right-8 p-4 bg-base-100 rounded-full shadow-lg border border-base-300 z-[100] hover:scale-110 transition-transform text-base-content"
+ className="fixed top-4 right-4 md:top-8 md:right-8 p-3 md:p-4 bg-base-100 rounded-full shadow-lg border border-base-300 z-[100] hover:scale-110 active:scale-95 transition-transform text-base-content"
  >
  {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} className="text-yellow-400" />}
  </button>
@@ -50,7 +50,7 @@ const Login = () => {
  <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[120px] opacity-10"></div>
  <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary rounded-full blur-[120px] opacity-5"></div>
  
- <div className="max-w-6xl w-full backdrop-blur-md bg-base-100/70 rounded-[3rem] shadow-[0_32px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row min-h-[700px] border border-white/20 relative z-10">
+ <div className="max-w-6xl w-full backdrop-blur-md bg-base-100/70 rounded-2xl md:rounded-[3rem] shadow-[0_32px_64px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col lg:flex-row min-h-0 md:min-h-[700px] border border-white/20 relative z-10">
  
  {/* Left Side - Visual Content (Always Dark) */}
  <div className="lg:w-1/2 bg-gradient-to-br from-[#1A3626] to-[#2d5a3f] p-12 flex flex-col justify-center items-center relative overflow-hidden hidden lg:flex">
@@ -82,13 +82,23 @@ const Login = () => {
  </div>
 
  {/* Right Side - Login Form */}
- <div className="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center bg-base-100">
- <div className="mb-12 text-center lg:text-left">
- <h1 className="text-5xl font-black text-base-content mb-4 tracking-tighter">Sign In</h1>
- <p className="text-neutral-content text-neutral-content text-lg font-medium">Access your global wallet instantly.</p>
+ <div className="lg:w-1/2 p-6 md:p-12 lg:p-24 flex flex-col justify-center bg-base-100">
+ {/* Mobile Logo */}
+ <div className="flex lg:hidden items-center justify-center gap-3 mb-6">
+ <div className="grid grid-cols-2 gap-1 w-9 h-9">
+ <div className="bg-primary rounded-tl-xl rounded-br-xl"></div>
+ <div className="bg-primary rounded-tr-xl rounded-bl-xl opacity-60"></div>
+ <div className="bg-primary rounded-tr-xl rounded-bl-xl opacity-60"></div>
+ <div className="bg-primary rounded-tl-xl rounded-br-xl"></div>
+ </div>
+ <h2 className="text-xl font-black tracking-tighter uppercase italic text-primary">Ta Cash</h2>
+ </div>
+ <div className="mb-8 md:mb-12 text-center lg:text-left">
+ <h1 className="text-3xl md:text-5xl font-black text-base-content mb-3 md:mb-4 tracking-tighter">Sign In</h1>
+ <p className="text-neutral-content text-base md:text-lg font-medium">Access your global wallet instantly.</p>
  </div>
 
- <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+ <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 md:space-y-8">
  <div className="space-y-2">
  <label className="text-[11px] font-black text-neutral-content uppercase tracking-widest flex items-center gap-2 px-1">
  <FaEnvelope className="text-primary" /> Email Address
@@ -96,7 +106,7 @@ const Login = () => {
  <input
  type="email"
  placeholder="name@example.com"
- className="w-full px-6 py-5 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all duration-300 outline-none text-base-content font-semibold"
+ className="w-full px-5 md:px-6 py-4 md:py-5 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all duration-300 outline-none text-base-content font-semibold"
  {...register("email", { required: true })}
  />
  {errors.email && <p className="text-red-500 text-xs font-bold uppercase mt-1 px-1">Email is required</p>}
@@ -110,7 +120,7 @@ const Login = () => {
  <input
  type={showPassword ? "text" : "password"}
  placeholder="•••••"
- className="w-full px-6 py-5 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all duration-300 outline-none text-base-content font-semibold tracking-[0.5em] placeholder:tracking-normal"
+ className="w-full px-5 md:px-6 py-4 md:py-5 rounded-2xl border-2 border-base-300 bg-base-200 focus:bg-base-100 focus:border-primary transition-all duration-300 outline-none text-base-content font-semibold tracking-[0.5em] placeholder:tracking-normal"
  {...register("password", { required: true })}
  />
  <button type="button" className="absolute right-6 top-1/2 -translate-y-1/2 text-neutral-content hover:text-primary transition-colors" onClick={() => setShowPassword(!showPassword)}>
@@ -128,12 +138,12 @@ const Login = () => {
  <a href="#" className="text-sm font-bold text-primary hover:underline transition-colors">Forgot PIN?</a>
  </div>
 
- <button type="submit" className="w-full py-5 mt-10 bg-primary text-white font-black text-lg uppercase tracking-widest rounded-2xl hover:brightness-110 shadow-lg hover:shadow-primary/20 transition-all duration-300 active:scale-[0.98]">
+ <button type="submit" className="w-full py-4 md:py-5 mt-6 md:mt-10 bg-primary text-white font-black text-base md:text-lg uppercase tracking-widest rounded-2xl hover:brightness-110 shadow-lg hover:shadow-primary/20 transition-all duration-300 active:scale-[0.97]">
  Enter Vault
  </button>
  </form>
 
- <p className="text-center mt-12 text-neutral-content text-neutral-content font-bold uppercase tracking-tighter text-sm">
+ <p className="text-center mt-8 md:mt-12 text-neutral-content font-bold uppercase tracking-tighter text-sm">
  New to Ta Cash?{" "}
  <Link to="/register" className="text-primary border-b-2 border-primary/20 hover:border-primary transition-all ml-1">
  Create secure account

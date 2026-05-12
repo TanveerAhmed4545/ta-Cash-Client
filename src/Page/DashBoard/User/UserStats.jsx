@@ -26,18 +26,18 @@ const UserStats = () => {
  const totalExpense = stats.reduce((acc, curr) => acc + curr.expense, 0);
 
  return (
- <div className="container mx-auto px-4 py-8">
+ <div className="w-full py-8">
  <div className="mb-10">
- <h1 className="text-3xl font-black text-base-content flex items-center gap-3">
+ <h1 className="text-2xl md:text-3xl font-black text-base-content flex items-center gap-3">
  <FaChartPie className="text-primary" /> My Statistics
  </h1>
  <p className="text-neutral-content mt-1">Visualize your financial habits and monthly cash flow.</p>
  </div>
 
- <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+ <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
  {/* Left: Summary Stats */}
  <div className="lg:col-span-1 space-y-6">
- <div className="bg-base-100 p-8 rounded-[2.5rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] shadow-sm border border-base-300">
  <span className="text-xs font-bold text-neutral-content uppercase tracking-widest block mb-1">Total Received</span>
  <h2 className="text-3xl font-black text-green-600">${totalIncome.toFixed(2)}</h2>
  <div className="mt-4 p-3 bg-green-50 rounded-2xl flex items-center gap-3">
@@ -46,7 +46,7 @@ const UserStats = () => {
  </div>
  </div>
 
- <div className="bg-base-100 p-8 rounded-[2.5rem] shadow-sm border border-base-300">
+ <div className="bg-base-100 p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] shadow-sm border border-base-300">
  <span className="text-xs font-bold text-neutral-content uppercase tracking-widest block mb-1">Total Spent</span>
  <h2 className="text-3xl font-black text-red-600">${totalExpense.toFixed(2)}</h2>
  <div className="mt-4 p-3 bg-red-50 rounded-2xl flex items-center gap-3">
@@ -55,7 +55,7 @@ const UserStats = () => {
  </div>
  </div>
 
- <div className="bg-primary p-8 rounded-[2.5rem] shadow-lg text-white relative overflow-hidden">
+ <div className="bg-primary p-5 md:p-8 rounded-2xl md:rounded-[2.5rem] shadow-lg text-white relative overflow-hidden">
  <div className="relative z-10">
  <h3 className="text-lg font-bold mb-2">Smart Tip</h3>
  <p className="text-sm opacity-80 leading-relaxed">
@@ -70,7 +70,7 @@ const UserStats = () => {
  </div>
 
  {/* Right: Bar Chart */}
- <div className="lg:col-span-2 bg-base-100 p-8 rounded-[3rem] shadow-sm border border-base-300">
+ <div className="lg:col-span-2 bg-base-100 p-5 md:p-8 rounded-2xl md:rounded-[3rem] shadow-sm border border-base-300">
  <div className="flex items-center justify-between mb-10">
  <h3 className="text-xl font-bold text-base-content">Income vs. Expense</h3>
  <select className="bg-base-200 border-none rounded-xl text-xs font-bold px-4 py-2 outline-none">
@@ -79,8 +79,8 @@ const UserStats = () => {
  </select>
  </div>
  
- <div className="h-[400px] w-full">
- <ResponsiveContainer width="100%" height="100%">
+ <div className="h-[250px] md:h-[400px] w-full">
+ <ResponsiveContainer width="100%" height="100%" minWidth={0}>
  <BarChart data={stats}>
  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
  <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{fill: '#9ca3af', fontSize: 12}} dy={10} />

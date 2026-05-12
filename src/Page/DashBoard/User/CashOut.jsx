@@ -84,16 +84,16 @@ const CashOut = () => {
  return (
  <>
  {status === "approved" ? (
- <div className="flex flex-col items-center pt-10 pb-20 px-4 min-h-screen font-sans bg-transparent">
- <div className="bg-base-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 w-full max-w-md relative overflow-hidden">
+ <div className="flex flex-col items-center pt-4 pb-24 md:pt-10 md:pb-20 px-0 md:px-4 min-h-screen font-sans bg-transparent">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 w-full max-w-md relative overflow-hidden">
  <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-red-500 to-orange-300"></div>
  <div className="flex justify-center mb-4 mt-2">
  <div className="w-12 h-12 bg-red-50 rounded-full flex items-center justify-center text-red-500">
  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" transform="rotate(180 12 12)" /></svg>
  </div>
  </div>
- <h2 className="text-2xl font-bold text-base-content mb-2 text-center">Cash Out</h2>
- <p className="text-sm text-neutral-content mb-8 text-center leading-relaxed">Withdraw funds securely via an authorized agent.</p>
+ <h2 className="text-xl md:text-2xl font-bold text-base-content mb-2 text-center">Cash Out</h2>
+ <p className="text-sm text-neutral-content mb-5 md:mb-8 text-center leading-relaxed">Withdraw funds securely via an authorized agent.</p>
  <div className="space-y-5">
  <div>
  <label className="block text-[11px] font-bold text-neutral-content uppercase tracking-wider mb-2">Agent Email</label>

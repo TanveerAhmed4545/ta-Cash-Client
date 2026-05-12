@@ -42,13 +42,17 @@ const ChangePinModal = ({ isOpen, onClose }) => {
  };
 
  return (
- <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+ <div className="fixed inset-0 z-[100] flex items-end md:items-center justify-center md:p-4">
  <div 
  className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
  onClick={onClose}
  ></div>
  
- <div className="relative w-full max-w-md bg-base-100 rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+ <div className="relative w-full md:max-w-md bg-base-100 rounded-t-3xl md:rounded-3xl shadow-2xl overflow-hidden animate-slide-up md:animate-none md:animate-in md:fade-in md:zoom-in md:duration-300 max-h-[90vh] overflow-y-auto">
+ {/* Mobile drag handle */}
+ <div className="md:hidden flex justify-center pt-3 pb-1">
+ <div className="w-10 h-1 bg-base-300 rounded-full"></div>
+ </div>
  {/* Header */}
  <div className="bg-primary p-6 text-white flex justify-between items-center">
  <div className="flex items-center gap-3">
@@ -69,7 +73,7 @@ const ChangePinModal = ({ isOpen, onClose }) => {
  </div>
 
  {/* Form */}
- <form onSubmit={handleSubmit(onSubmit)} className="p-8 space-y-6">
+ <form onSubmit={handleSubmit(onSubmit)} className="p-5 md:p-8 space-y-5 md:space-y-6">
  <div>
  <label className="block text-sm font-semibold text-base-content mb-2">Current 5-Digit PIN</label>
  <div className="relative">

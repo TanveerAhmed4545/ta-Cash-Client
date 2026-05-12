@@ -98,10 +98,10 @@ const AgentTransactions = () => {
   }
 
   return (
-    <div className="w-full px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="w-full py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h2 className="text-3xl font-black text-base-content tracking-tight">Agent Transactions</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">Agent Transactions</h2>
           <p className="text-neutral-content mt-1 font-medium italic">Comprehensive log of all processed client requests.</p>
         </div>
         
@@ -113,10 +113,34 @@ const AgentTransactions = () => {
         </div>
       </div>
 
-      <div className="bg-base-100 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
+      <div className="bg-base-100 rounded-2xl md:rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary to-accent opacity-30 rounded-b-full"></div>
         
-        <div className="overflow-x-auto p-2">
+        {/* Mobile Card View */}
+        <div className="md:hidden p-3 space-y-3 stagger-children">
+          {history.length > 0 ? history.map((item) => {
+            const isCashIn = item.type === "cash-in" || item.type === "agent-cash-in";
+            return (
+              <div key={item._id} className="flex items-center justify-between p-3.5 bg-base-200/30 rounded-xl border border-base-300/50">
+                <div className="flex items-center gap-3">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isCashIn ? 'bg-blue-500/10 text-blue-500' : 'bg-orange-500/10 text-orange-500'}`}>
+                    {isCashIn ? <FiArrowDownLeft size={16} /> : <FiArrowUpRight size={16} />}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-base-content capitalize">{item.type.replace('-', ' ')}</p>
+                    <p className="text-[10px] text-neutral-content">${item.amount}</p>
+                  </div>
+                </div>
+                <button onClick={() => generatePDF(item)} className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center active:scale-90 transition-transform"><FiDownload size={16} /></button>
+              </div>
+            );
+          }) : (
+            <div className="py-12 text-center"><FiDollarSign size={32} className="mx-auto mb-3 opacity-20" /><p className="text-sm font-bold text-base-content">No Transactions</p></div>
+          )}
+        </div>
+
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto p-2">
           <table className="w-full text-left border-collapse mt-2">
             <thead>
               <tr className="border-b border-base-300">

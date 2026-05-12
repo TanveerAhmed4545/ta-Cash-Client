@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import SideBar from "../components/Dashboard/SideBar/SideBar";
-import { FaSearch, FaBell, FaCommentAlt } from "react-icons/fa";
+import { FaSearch, FaBell, FaCommentAlt, FaHome, FaExchangeAlt, FaPlus, FaHistory, FaEllipsisH } from "react-icons/fa";
 import { AiOutlineBars } from "react-icons/ai";
 import { FiUser, FiMail, FiKey, FiLogOut } from "react-icons/fi";
 import { useAuth } from "../Provider/AuthProvider";
@@ -20,6 +20,7 @@ const DashboardLayout = () => {
  const [isInboxOpen, setInboxOpen] = useState(false);
  const [searchQuery, setSearchQuery] = useState("");
  const navigate = useNavigate();
+ const location = useLocation();
 
  // Define searchable pages relevant to Ta-Cash
  const allPages = [
@@ -46,6 +47,17 @@ const DashboardLayout = () => {
  const searchResults = allPages.filter(page => 
  page.name.toLowerCase().includes(searchQuery.toLowerCase())
  );
+
+ // Bottom nav items
+ const bottomNavItems = [
+ { label: "Home", icon: FaHome, path: "/dashboard" },
+ { label: "Send", icon: FaExchangeAlt, path: "/dashboard/send-Money" },
+ { label: "Add", icon: FaPlus, path: "/dashboard/cashIn" },
+ { label: "History", icon: FaHistory, path: "/dashboard/userTransactions" },
+ { label: "More", icon: FaEllipsisH, action: "sidebar" },
+ ];
+
+ const isActivePath = (path) => location.pathname === path;
  
  return (
  <div className="min-h-screen bg-base-200 md:pl-64">
@@ -55,21 +67,21 @@ const DashboardLayout = () => {
  {/* right side */}
  <div className="flex flex-col min-h-screen min-w-0">
  {/* Top Header */}
- <header className="bg-base-200 sticky top-0 z-10 flex items-center justify-between px-6 md:px-10 py-4 md:py-6 border-b border-transparent">
+ <header className="bg-base-200 sticky top-0 z-10 flex items-center justify-between px-4 md:px-10 py-3 md:py-6 border-b border-transparent">
  
  {/* Mobile Hamburger & Page Title */}
  <div className="flex items-center gap-3 md:gap-0">
  <button
  onClick={() => setSidebarOpen(!isSidebarOpen)}
- className="md:hidden p-2 -ml-2 text-neutral-content focus:outline-none bg-base-100 rounded-lg border border-base-300 shadow-sm"
+ className="md:hidden p-2 -ml-1 text-neutral-content focus:outline-none bg-base-100 rounded-xl border border-base-300 shadow-sm active:scale-95 transition-transform"
  >
- <AiOutlineBars className="h-6 w-6" />
+ <AiOutlineBars className="h-5 w-5" />
  </button>
- <h1 className="text-xl md:text-2xl font-bold text-base-content">Dashboard</h1>
+ <h1 className="text-lg md:text-2xl font-bold text-base-content">Dashboard</h1>
  </div>
 
  {/* Right: Actions & Profile */}
- <div className="flex items-center gap-3 md:gap-6">
+ <div className="flex items-center gap-2 md:gap-6">
  {/* Search Bar - hidden on smaller tablets/mobile to save space */}
  <div className="hidden lg:flex items-center w-full max-w-xs relative">
  <div className="flex items-center w-full bg-base-100 rounded-full px-4 py-2 border border-base-300 shadow-sm focus-within:ring-2 focus-within:ring-[#1A3626]/20 focus-within:border-[#1A3626] transition-all">
@@ -109,12 +121,12 @@ const DashboardLayout = () => {
  </div>
 
  {/* Notification icons */}
- <div className="flex items-center gap-2 md:gap-3">
+ <div className="flex items-center gap-1.5 md:gap-3">
  <button 
  onClick={() => setInboxOpen(true)}
- className="relative p-2 bg-base-100 rounded-full text-neutral-content hover:text-primary transition-colors shadow-sm border border-base-300"
+ className="relative p-2 bg-base-100 rounded-full text-neutral-content hover:text-primary transition-colors shadow-sm border border-base-300 active:scale-95 transition-transform"
  >
- <FaCommentAlt className="text-sm md:text-base" />
+ <FaCommentAlt className="text-xs md:text-base" />
  </button>
  <NotificationDropdown 
  notifications={notifications} 
@@ -126,7 +138,7 @@ const DashboardLayout = () => {
  {/* Profile Dropdown */}
  <div className="relative">
  <div 
- className="flex items-center gap-2 md:gap-3 ml-1 md:ml-2 shrink-0 cursor-pointer hover:bg-base-200 p-1.5 rounded-lg transition-colors"
+ className="flex items-center gap-2 md:gap-3 ml-0.5 md:ml-2 shrink-0 cursor-pointer hover:bg-base-200 p-1 md:p-1.5 rounded-lg transition-colors active:scale-95 transition-transform"
  onClick={() => setProfileOpen(!isProfileOpen)}
  >
  <div className="text-right hidden sm:block">
@@ -142,7 +154,7 @@ const DashboardLayout = () => {
  onError={(e) => {
  e.target.src = `https://ui-avatars.com/api/?name=${user?.name || 'User'}&background=1A3626&color=fff`;
  }}
- className="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-green-200 shadow-sm object-cover shrink-0"
+ className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-green-200 shadow-sm object-cover shrink-0"
  />
  </div>
 
@@ -199,9 +211,42 @@ const DashboardLayout = () => {
  </header>
 
  {/* outlet / Main Content */}
- <div className="px-6 md:px-10 pb-10 flex-1 min-w-0 overflow-x-hidden">
+ <div className="px-4 md:px-10 pb-24 md:pb-10 flex-1 min-w-0 overflow-x-hidden">
  <Outlet></Outlet>
  </div>
+
+ {/* Mobile Bottom Navigation */}
+ <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-base-100/90 backdrop-blur-xl border-t border-base-300 shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+ <div className="flex items-center justify-around px-2 py-1.5 pb-[max(0.375rem,env(safe-area-inset-bottom))]">
+ {bottomNavItems.map((item, idx) => {
+ const isActive = item.path ? isActivePath(item.path) : false;
+ return (
+ <button
+ key={idx}
+ onClick={() => {
+ if (item.action === "sidebar") {
+ setSidebarOpen(true);
+ } else {
+ navigate(item.path);
+ }
+ }}
+ className={`flex flex-col items-center gap-0.5 py-1.5 px-3 rounded-xl transition-all duration-200 active:scale-90 min-w-[56px] ${
+ isActive 
+ ? "text-primary" 
+ : "text-neutral-content"
+ }`}
+ >
+ <div className={`relative p-1.5 rounded-xl transition-all duration-300 ${isActive ? "bg-primary/10" : ""}`}>
+ <item.icon className={`text-base transition-all ${isActive ? "text-primary" : ""}`} />
+ </div>
+ <span className={`text-[10px] font-bold transition-all ${isActive ? "text-primary" : ""}`}>
+ {item.label}
+ </span>
+ </button>
+ );
+ })}
+ </div>
+ </nav>
  </div>
 
  <ChangePinModal 

@@ -87,10 +87,10 @@ const UserManagement = () => {
   }
 
   return (
-    <div className="w-full px-4 lg:px-8 py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="w-full py-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
         <div>
-          <h2 className="text-3xl font-black text-base-content tracking-tight">Identity Access</h2>
+          <h2 className="text-2xl md:text-3xl font-black text-base-content tracking-tight">Identity Access</h2>
           <p className="text-neutral-content mt-1 font-medium italic">Manage user roles, statuses, and platform security.</p>
         </div>
         
@@ -111,10 +111,53 @@ const UserManagement = () => {
         </div>
       </div>
 
-      <div className="bg-base-100 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
+      <div className="bg-base-100 rounded-2xl md:rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 overflow-hidden relative">
         <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-primary to-accent"></div>
         
-        <div className="overflow-x-auto p-2">
+        {/* Mobile Card View */}
+        <div className="md:hidden p-3 space-y-3 stagger-children">
+          {users.length > 0 ? users.map((item, idx) => {
+            const isAgent = item.role === "agent";
+            const isAdmin = item.role === "admin";
+            const isApproved = item.status === "approved";
+            const isBlocked = item.status === "Blocked";
+            return (
+              <div key={idx} className="p-4 bg-base-200/30 rounded-xl border border-base-300/50">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className={`p-2.5 rounded-xl ${isAdmin ? 'bg-purple-500/10 text-purple-500' : isAgent ? 'bg-primary/10 text-primary' : 'bg-blue-500/10 text-blue-500'}`}>
+                      {isAdmin ? <FiShield size={16} /> : isAgent ? <FiBriefcase size={16} /> : <FiUser size={16} />}
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-base-content">{item.name}</p>
+                      <p className="text-[10px] text-neutral-content">{item.email}</p>
+                    </div>
+                  </div>
+                  <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-wider ${isApproved ? 'bg-success/10 text-success' : isBlocked ? 'bg-error/10 text-error' : 'bg-warning/10 text-warning'}`}>
+                    {item.status || "Pending"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${isAdmin ? 'bg-purple-500/10 text-purple-500' : isAgent ? 'bg-primary/10 text-primary' : 'bg-blue-500/10 text-blue-500'}`}>{item.role}</span>
+                  <div className="flex items-center gap-1.5">
+                    <button className="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center active:scale-90 transition-transform" onClick={() => handleRoleChange(item.email, "user", "approved")}><FiUser size={14} /></button>
+                    <button className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center active:scale-90 transition-transform" onClick={() => handleRoleChange(item.email, "agent", "approved")}><FiBriefcase size={14} /></button>
+                    <button className="w-8 h-8 rounded-lg bg-error/10 text-error flex items-center justify-center active:scale-90 transition-transform" onClick={() => handleRoleChange(item.email, item.role, "Blocked")}><FiSlash size={14} /></button>
+                    <button className="w-8 h-8 rounded-lg bg-red-900/10 text-red-900 flex items-center justify-center active:scale-90 transition-transform" onClick={() => handleDelete(item.email)}><FiTrash2 size={14} /></button>
+                  </div>
+                </div>
+              </div>
+            );
+          }) : (
+            <div className="py-12 text-center text-neutral-content">
+              <FiUser size={32} className="mx-auto mb-3 opacity-20" />
+              <p className="text-sm font-bold text-base-content">No Accounts Found</p>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block overflow-x-auto p-2">
           <table className="w-full text-left border-collapse mt-2">
             <thead>
               <tr className="border-b border-base-300">

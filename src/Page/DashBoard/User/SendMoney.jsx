@@ -85,16 +85,16 @@ const SendMoney = () => {
  return (
  <>
  {status === "approved" ? (
- <div className="flex flex-col items-center pt-10 pb-20 px-4 min-h-screen font-sans bg-transparent">
- <div className="bg-base-100 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 w-full max-w-md relative overflow-hidden">
+ <div className="flex flex-col items-center pt-4 pb-24 md:pt-10 md:pb-20 px-0 md:px-4 min-h-screen font-sans bg-transparent">
+ <div className="bg-base-100 rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-base-300 w-full max-w-md relative overflow-hidden">
  <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#1A3626] to-[#bbf7d0]"></div>
  <div className="flex justify-center mb-4 mt-2">
  <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-blue-500">
  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>
  </div>
  </div>
- <h2 className="text-2xl font-bold text-base-content mb-2 text-center">Send Money</h2>
- <p className="text-sm text-neutral-content mb-8 text-center leading-relaxed">Securely transfer funds to other users.</p>
+ <h2 className="text-xl md:text-2xl font-bold text-base-content mb-2 text-center">Send Money</h2>
+ <p className="text-sm text-neutral-content mb-5 md:mb-8 text-center leading-relaxed">Securely transfer funds to other users.</p>
  <div className="space-y-5">
  <div>
  <label className="block text-[11px] font-bold text-neutral-content uppercase tracking-wider mb-2">Recipient Email</label>
